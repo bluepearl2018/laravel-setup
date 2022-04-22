@@ -1,0 +1,13 @@
+<?php
+
+namespace DummyNamespace;
+
+use Eutranet\Setup\Foo;
+
+class DummyClass implements Foo
+{
+    public function myFoo()
+    {
+        // foo
+    }
+}

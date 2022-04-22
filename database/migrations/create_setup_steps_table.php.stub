@@ -1,0 +1,41 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('setup_steps', function (Blueprint $table) {
+			$table->bigIncrements('id');
+			$table->foreignId('setup_process_id')->nullable()->constrained()->default(1);
+			$table->string('name');
+			$table->longText('description')->nullable();
+			$table->longText('comment')->nullable();
+			$table->string('console_action')->nullable()->default(NULL);
+			$table->string('console_check')->nullable()->default(NULL);
+			$table->string('config_path')->nullable()->default(NULL);
+			$table->boolean('is_complete')->nullable()->default(NULL);
+			$table->nullableTimestamps();
+		});
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::table('setup_steps', function (Blueprint $table) {
+			$table->dropConstrainedForeignId('setup_process_id');
+		});
+		Schema::dropIfExists('setup_steps');
+	}
+};

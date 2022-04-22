@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('model_docs', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('table_name')->nullable()->default(NULL);
+            $table->string('slug')->nullable()->default(NULL);
+            $table->string('name')->nullable()->default(NULL);
+            $table->string('namespace')->nullable()->default(NULL);
+            $table->longText('description')->nullable();
+            $table->longText('comment')->nullable();
+            $table->nullableTimestamps();
+        });
+
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('model_docs');
+    }
+};

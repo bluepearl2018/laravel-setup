@@ -1,0 +1,42 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateDocsTable extends Migration
+{
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('docs', function (Blueprint $table) {
+			$table->bigIncrements('id');
+			$table->unsignedBigInteger('doc_category_id')->references('id')->on('doc_categories')->nullable();
+			$table->string('slug')->nullable();
+			$table->longText('meta_description')->nullable();
+			$table->longText('meta_title')->nullable();
+			$table->longText('title')->nullable();
+			$table->longText('lead')->nullable();
+			$table->longText('body')->nullable();
+			$table->unsignedBigInteger('author_id')->nullable()->default(NULL);
+			$table->string('author_type')->nullable()->default(NULL);
+			$table->nullableTimestamps();
+			$table->softDeletes();
+		});
+
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::dropIfExists('docs');
+	}
+}

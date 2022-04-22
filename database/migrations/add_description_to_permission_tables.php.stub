@@ -1,0 +1,50 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+use Spatie\Permission\PermissionRegistrar;
+
+/**
+ * This migration is based on Laravel Spatie Permissions
+ * Please note we have customized the table columns
+ * Long text Comments / Description added
+ */
+class AddDescriptionToPermissionTables extends Migration
+{
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 * @throws Exception
+	 */
+	public function up()
+	{
+		Schema::table('roles', function (Blueprint $table) {
+			// Added description
+			$table->longText('description')->nullable();
+		});
+		Schema::table('permissions', function (Blueprint $table) {
+			// Added description
+			$table->longText('description')->nullable();
+		});
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 * @throws Exception
+	 */
+	public function down()
+	{
+		Schema::table('roles', function (Blueprint $table) {
+			// Added description
+			$table->dropColumn('description');
+		});
+		Schema::table('permissions', function (Blueprint $table) {
+			// Added description
+			$table->dropColumn('description');
+		});
+	}
+}

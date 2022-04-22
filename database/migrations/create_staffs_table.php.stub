@@ -1,0 +1,63 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('staffs', function (Blueprint $table) {
+			$table->bigIncrements('id');
+			$table->string('login', 255)->nullable()->default(NULL);
+			$table->string('nif', 9)->nullable()->default(NULL);
+			$table->string('name', 255)->nullable()->default(NULL);
+			$table->foreignId('gender_id')->nullable()->default(NULL)->constrained();
+			$table->foreignId('appellative_id')->nullable()->default(NULL)->constrained();
+			$table->string('first_name', 50)->nullable()->default(NULL);
+			$table->string('last_name', 50)->nullable()->default(NULL);
+			$table->date('date_of_birth')->nullable()->default(NULL);
+			$table->string('function', 60)->nullable()->default(NULL);
+			$table->string('address1', 38)->nullable()->default(NULL);
+			$table->string('address2', 38)->nullable()->default(NULL);
+			$table->string('postal_code', 12)->nullable()->default(NULL);
+			$table->string('city', 50)->nullable()->default(NULL);
+			$table->string('council', 50)->nullable()->default(NULL);
+			$table->string('district', 50)->nullable()->default(NULL);
+			$table->foreignId('country_id')->default(NULL)->nullable()->constrained();
+			$table->string('phone', 15)->nullable()->default(NULL);
+			$table->string('email')->unique();
+			$table->timestamp('email_verified_at')->nullable();
+			$table->longText('lead')->nullable();
+			$table->longText('body')->nullable();
+			$table->string('password')->default(Hash::make('Password'));
+			$table->string('representante')->nullable()->default(NULL);
+			$table->boolean('is_active')->nullable()->default(false);
+			$table->boolean('is_super')->nullable()->default(false);
+			$table->nullableTimestamps();
+			$table->softDeletes();
+		});
+
+
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::table('staffs', function (Blueprint $table) {
+			$table->dropConstrainedForeignId('appellative_id');
+			$table->dropConstrainedForeignId('gender_id');
+			$table->dropConstrainedForeignId('country_id');
+		});
+		Schema::dropIfExists('staffs');
+	}
+};
