@@ -183,7 +183,7 @@ class SetupStepRepository extends BaseRepository implements EutranetSetupInterfa
 			),
 			'people tables' => array(
 				'Aministrators table' => Schema::hasTable('admins') ? 'OK' : 'Upload create_admins_table to migrations',
-				'Staff members table' => Schema::hasTable('staff_members') ? 'OK' : 'Upload create_staffs_table to migrations',
+				'Staff members table' => Schema::hasTable('staff_members') ? 'OK' : 'Upload create_staff_members_table to migrations',
 				'Users members table' => Schema::hasTable('users') ? 'OK' : 'Upload create_users_table to migrations',
 			),
 			'user-notifications' => array(

@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Seeder;
 use Eutranet\Setup\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
-use DB;
-use Eutranet\Setup\Models\StaffMember;
 
 class RoleSeeder extends Seeder
 {
@@ -95,14 +93,6 @@ class RoleSeeder extends Seeder
 					->save();
 			}
 
-			// Assign the super-staff role to the first staff member
-			if(DB::table('model_has_roles')
-					->where('role_id', 5)
-					->where('model_type', 'Eutranet\Setup\Models\StaffMember')
-					->where('model_id', '1')
-					->get()->first() === NULL){
-					StaffMember::find(1)->assignRole('super-staff');
-			}
 
 		}
 	}

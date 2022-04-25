@@ -27,7 +27,7 @@ class SetupServiceProvider extends PackageServiceProvider
 			->hasMigration('create_setup_processes_table')
 			->hasMigration('create_setup_steps_table')
 			->hasMigration('create_admins_table')
-			->hasMigration('create_staffs_table')
+			->hasMigration('create_staff_members_table')
 			->hasMigration('create_teams_table')
 			->hasMigration('create_guards_table')
 			->hasMigration('create_general_terms_table')

@@ -227,11 +227,11 @@ class StaffMember extends Authenticatable implements HasMedia, MustVerifyEmail
 	 * To be able to instantiate the right Model from our laravel-init
 	 * with the factory() method, we need to add the following
 	 * method to our model:
-	 * @return StaffFactory
+	 * @return StaffMemberFactory
 	 */
-	protected static function newFactory(): StaffFactory
+	protected static function newFactory(): StaffMemberFactory
 	{
-		return StaffFactory::new();
+		return StaffMemberFactory::new();
 	}
 
 	/**

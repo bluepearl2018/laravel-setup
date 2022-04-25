@@ -4,8 +4,6 @@ namespace Eutranet\Setup\Database\Seeders;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\PermissionRegistrar;
-use Eutranet\Setup\Models\Role;
 use DB;
 
 class EmailSeeder extends Seeder
