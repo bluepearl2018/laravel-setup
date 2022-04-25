@@ -1,75 +1,92 @@
-@extends('theme::setup.master')
+@extends('setup::layouts.master')
 @section('content')
-	<x-theme::h1>{{ $role['description'] }}
-		({{\Eutranet\Setup\Models\Guard::where('slug', $role->guard_name)->get()->first()->name }})
-	</x-theme::h1>
+	<x-theme-h1>{{ $role['description'] }}
+		({{ \Eutranet\Setup\Models\Guard::where('slug', $role->guard_name)->get()->first()?->name }})
+	</x-theme-h1>
 	<p class="mb-2 italic">{{__('About this role and associated permissions.')}}</p>
-	<x-theme::h2>{!! __('Permissions of the <strong>'. $role->description . '</strong>.')  !!}</x-theme::h2>
-	<p class="mb-2 italic">{{__('Permissions can be modified after initial installations... However, this will more than likely involve development tasks.')}}</p>
+	<x-theme-h2>{!! __('Permissions assigned to <strong>'. $role->description . '</strong>.')  !!}</x-theme-h2>
+	<p class="italic">{{__('Permissions can be modified after installations... However, this is not recommended as it will involve development tasks. A better solution would be to create a new role. List, Create, Read, Update, Delete, Translate.')}}</p>
+
 	<form id="sync-role-permissions-frm" action="{{route('setup.roles.sync-permission', [$role])}}"
 		  method="post">
 		@csrf
 		@method('PUT')
-		<x-theme::forms.update-buttons form="sync-role-permissions-frm">{{__('Update')}}</x-theme::forms.update-buttons>
 		<input type="hidden" value="{{ $role->guard_name }}" name="guard_name"/>
-		<table>
-			<tr>
-				<td>{{__('Model')}}</td>
-				<td>{{__('C')}}</td>
-				<td>{{__('R')}}</td>
-				<td>{{__('U')}}</td>
-				<td>{{__('D')}}</td>
-				<td><i class="fa fa-language"></i></td>
-			</tr>
-			@forelse($modelDocs as $modelDoc)
-				<tr class="">
-					<td>{{$modelDoc->name}}</td>
-					<td>
-						<input type="hidden" value="{{'create-'.$modelDoc->slug}}"/>
-						<label>
-							<input {!! $role->hasPermissionTo('create-'.$modelDoc->slug, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
-								   type="checkbox"
-								   value="{{'create-'.$modelDoc->slug}}" readonly/>
-						</label>
-					</td>
-					<td>
-						<input type="hidden" value="{{'read-'.$modelDoc->slug}}"/>
-						<label>
-							<input {!! $role->hasPermissionTo('read-'.$modelDoc->slug, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
-								   type="checkbox"
-								   value="{{'read-'.$modelDoc->slug}}" readonly/>
-						</label>
-					</td>
-					<td>
-						<input type="hidden" value="{{'update-'.$modelDoc->slug}}"/>
-						<label>
-							<input {!! $role->hasPermissionTo('update-'.$modelDoc->slug, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
-								   type="checkbox"
-								   value="{{'update-'.$modelDoc->slug}}" readonly/>
-						</label>
-					</td>
-					<td>
-						<input type="hidden" value="{{'delete-'.$modelDoc->slug}}"/>
-						<label>
-							<input {!! $role->hasPermissionTo('delete-'.$modelDoc->slug, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
-								   type="checkbox"
-								   value="{{'delete-'.$modelDoc->slug}}" readonly/>
-						</label>
-					</td>
-					<td>
-						<input type="hidden" value="{{'translate-'.$modelDoc->slug}}"/>
-						<label>
-							<input {!! $role->hasPermissionTo('translate-'.$modelDoc->slug, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
-								   type="checkbox"
-								   value="{{'translate-'.$modelDoc->slug}}" readonly/>
-						</label>
-					</td>
-				</tr>
-			@empty
-				{{$permissions ?? __('NOTHING_TO_SHOW') }}
+			@forelse(\Eutranet\Init\Models\InstallStatus::all() as $is)
+				@if(! empty(config('eutranet-' . $is->package_name . '.tables')))
+					<div class="table w-full mt-4">
+						<div class="table-row">
+							<x-theme-h2 class="table-cell w-6/12">{{ Str::title($is->package_name)}}</x-theme-h2>
+							<x-theme-h2 class="table-cell w-1/12">{{__('L')}}</x-theme-h2>
+							<x-theme-h2 class="table-cell w-1/12">{{__('C')}}</x-theme-h2>
+							<x-theme-h2 class="table-cell w-1/12">{{__('R')}}</x-theme-h2>
+							<x-theme-h2 class="table-cell w-1/12">{{__('U')}}</x-theme-h2>
+							<x-theme-h2 class="table-cell w-1/12">{{__('D')}}</x-theme-h2>
+							<x-theme-h2 class="table-cell w-1/12"><i class="fa fa-language"></i></x-theme-h2>
+						</div>
+						@forelse(config('eutranet-' . $is->package_name . '.tables') as $table)
+							@php($tableName = Str::slug($table))
+							<div class="table-row border-gray-500 border-separate border-b-2">
+								<div class="table-cell w-6/12">
+									<a href="{{route('setup.'.Str::slug($table).'.index')}}">{{ Str::replace('-', ' ', Str::title($tableName)) }}</a>
+								</div>
+								<div class="table-cell w-1/12">
+									<input type="hidden" value="{{'list-'.$tableName}}"/>
+									<label>
+										<input {!! $role->hasPermissionTo('list-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
+											   type="checkbox"
+											   value="{{'list-'.$tableName}}" readonly/>
+									</label>
+								</div>
+								<div class="table-cell w-1/12">
+									<input type="hidden" value="{{'create-'.$tableName}}"/>
+									<label>
+										<input {!! $role->hasPermissionTo('create-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
+											   type="checkbox"
+											   value="{{'create-'.$tableName}}" readonly/>
+									</label>
+								</div>
+								<div class="table-cell w-1/12">
+									<input type="hidden" value="{{'read-'.$tableName}}"/>
+									<label>
+										<input {!! $role->hasPermissionTo('read-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
+											   type="checkbox"
+											   value="{{'read-'.$tableName}}" readonly/>
+									</label>
+								</div>
+								<div class="table-cell w-1/12">
+									<input type="hidden" value="{{'update-'.$tableName}}"/>
+									<label>
+										<input {!! $role->hasPermissionTo('update-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
+											   type="checkbox"
+											   value="{{'update-'.$tableName}}" readonly/>
+									</label>
+								</div>
+								<div class="table-cell w-1/12">
+									<input type="hidden" value="{{'delete-'.$tableName}}"/>
+									<label>
+										<input {!! $role->hasPermissionTo('delete-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
+											   type="checkbox"
+											   value="{{'delete-'.$tableName}}" readonly/>
+									</label>
+								</div>
+								<div class="table-cell w-1/12">
+									<input type="hidden" value="{{'translate-'.$tableName}}"/>
+									<label>
+										<input {!! $role->hasPermissionTo('translate-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
+											   type="checkbox"
+											   value="{{'translate-'.$tableName}}" readonly/>
+									</label>
+								</div>
+							</div>
+						@empty
+							{{$permissions ?? __('NOTHING_TO_SHOW') }}
+						@endforelse
+					</div>
+				@endif
+				@empty
 			@endforelse
-		</table>
-		<x-theme::forms.update-buttons form="sync-role-permissions-frm">{{__('Update')}}</x-theme::forms.update-buttons>
+		<x-theme-form-update-buttons form="sync-role-permissions-frm">{{__('Update')}}</x-theme-form-update-buttons>
 	</form>
 
 @endsection

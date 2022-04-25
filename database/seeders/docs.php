@@ -16,10 +16,10 @@ return
 		array(
 			'doc_category_id' => 1, //
 			'slug' => 'staff',
-			'meta_description' => '{"fr":"Page de documentation sur la classe Staff"}',
-			'meta_title' => '{"fr":"La classe Staff"}',
-			'title' => '{"fr":"Staff (Staff::class)"}',
-			'lead' => '{"fr":"Tout utilisateur enregistré doit être pris en charge par un collaborateur (Staff)."}',
+			'meta_description' => '{"fr":"Page de documentation sur la classe StaffMember"}',
+			'meta_title' => '{"fr":"La classe StaffMember"}',
+			'title' => '{"fr":"StaffMember (StaffMember::class)"}',
+			'lead' => '{"fr":"Tout utilisateur enregistré doit être pris en charge par un collaborateur (StaffMember)."}',
 			'body' => '{"fr":"La prise en charge de l\'utilisateur par un collaborateur est assignée à tout moment par un administrateur ou assistant."}',
 			'admin_id' => 1
 		),

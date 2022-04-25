@@ -9,6 +9,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 
 /**
@@ -22,7 +24,13 @@ class GeneralTerm extends Model implements HasMedia
 	use HasFactory;
 	use SoftDeletes;
 
+	/**
+	 * @var string
+	 */
 	protected $table = "general_terms";
+	/**
+	 * @var string[]
+	 */
 	protected $fillable = [
 		'title',
 		'description',
@@ -31,6 +39,9 @@ class GeneralTerm extends Model implements HasMedia
 		'admin_id'
 	];
 
+	/**
+	 * @var array|string[]
+	 */
 	protected array $translatable = [
 		'title',
 		'description',
@@ -38,6 +49,9 @@ class GeneralTerm extends Model implements HasMedia
 		'body'
 	];
 
+	/**
+	 * @return \string[][]
+	 */
 	#[ArrayShape(['title' => "string[]", 'description' => "string[]", 'lead' => "string[]", 'body' => "string[]", 'file_path' => "string[]"])]
 	public static function getFields(): array
 	{
@@ -90,5 +104,26 @@ class GeneralTerm extends Model implements HasMedia
 	public function admin(): BelongsTo
 	{
 		return $this->belongsTo(Admin::class, 'admin_id');
+	}
+
+	/**
+	 * The "booted" method of the model.
+	 *
+	 * @return void
+	 */
+	protected static function booted()
+	{
+		if(Schema::hasTable('model_docs'))
+		{
+			ModelDoc::firstOrCreate([
+				'table_name' => (new GeneralTerm())->getTable(),
+				'slug' => Str::slug((new GeneralTerm())->getTable()),
+				'name' => Str::replace(Str::snake(Str::afterLast(__CLASS__, '\\')), '_', ' '),
+				'namespace' => __NAMESPACE__,
+				'description' => self::getClassLead(),
+				'comment' => NULL,
+				'default_role' => 'admin'
+			]);
+		}
 	}
 }

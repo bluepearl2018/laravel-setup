@@ -11,6 +11,9 @@ use Artisan;
 use Eutranet\Setup\Models\SetupProcess;
 use Eutranet\Setup\Models\SetupStep;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 /**
  * The setup step controller allows the super admin to complete setup steps.
@@ -30,9 +33,9 @@ class SetupStepController extends Controller
 
 	/**
 	 * @param SetupProcess|null $setupProcess
-	 * @return Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+	 * @return Application|Factory|View
 	 */
-	public function index(?SetupProcess $setupProcess): Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+	public function index(?SetupProcess $setupProcess): Application|Factory|View
 	{
 		return view('setup::setup-steps.index', ['setupProcess' => $setupProcess, 'setupSteps' => $this->setupStepRepo->all()]);
 	}
@@ -40,9 +43,9 @@ class SetupStepController extends Controller
 	/**
 	 * @param Request $request
 	 * @param SetupProcess|null $setupProcess
-	 * @return \Illuminate\Http\RedirectResponse
+	 * @return RedirectResponse
 	 */
-	public function store(Request $request, ?SetupProcess $setupProcess): \Illuminate\Http\RedirectResponse
+	public function store(Request $request, ?SetupProcess $setupProcess): RedirectResponse
 	{
 		$rules = [
 			'setup_process_id' => 'exists:setup_processes, id',
@@ -54,7 +57,7 @@ class SetupStepController extends Controller
 		];
 		$validated = $request->validate($rules);
 		$setupStep = SetupStep::firstOrCreate($validated);
-		return redirect()->route('setup.laravel-setup-steps.show', $setupStep);
+		return redirect()->route('setup::setup-steps.show', $setupStep);
 	}
 
 	/**
@@ -64,7 +67,7 @@ class SetupStepController extends Controller
 	 */
 	public function show(?SetupProcess $setupProcess, SetupStep $setupStep): Factory|View|Application
 	{
-		return view('laravel-setup.laravel-setup-steps.show', ['setupProcess' => $setupProcess, 'setupStep' => $setupStep]);
+		return view('setup::setup-steps.show', ['setupProcess' => $setupProcess, 'setupStep' => $setupStep]);
 	}
 
 	/**
@@ -74,7 +77,7 @@ class SetupStepController extends Controller
 	 */
 	public function edit(?SetupProcess $setupProcess, SetupStep $setupStep): Factory|View|Application
 	{
-		return view('laravel-setup.laravel-setup-steps.edit', ['setupProcess' => $setupProcess, 'setupStep' => $setupStep]);
+		return view('setup::setup-steps.edit', ['setupProcess' => $setupProcess, 'setupStep' => $setupStep]);
 	}
 
 
@@ -105,7 +108,7 @@ class SetupStepController extends Controller
 	 */
 	public function run(Request $request, SetupStep $setupStep): RedirectResponse
 	{
-		Auth::user()->hasPermissionTo('update-laravel-setup-step');
+		Auth::user()->hasPermissionTo('update-setup-step');
 		Artisan::call($setupStep->console_action);
 		$setupStep->update(['is_complete' => true]);
 		Flash::success('Command ' . $setupStep->console_action . ' executed.');
@@ -115,11 +118,11 @@ class SetupStepController extends Controller
 	/**
 	 * @param Request $request
 	 * @param SetupStep $setupStep
-	 * @return \Illuminate\Http\RedirectResponse
+	 * @return RedirectResponse
 	 */
-	public function setComplete(Request $request, SetupStep $setupStep): \Illuminate\Http\RedirectResponse
+	public function setComplete(Request $request, SetupStep $setupStep): RedirectResponse
 	{
-		Auth::user()->hasPermissionTo('update-laravel-setup-step');
+		Auth::user()->hasPermissionTo('update-setup-step');
 		$setupStep->update(['is_complete' => true]);
 		Flash::success('Step set complete');
 		return redirect()->back();

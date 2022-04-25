@@ -10,8 +10,8 @@ use JetBrains\PhpStorm\ArrayShape;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
-use Eutranet\Setup\Models\Staff;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 /**
  * Emails are not messages.
@@ -28,18 +28,27 @@ class Email extends Model implements HasMedia
 	use HasRoles;
 	use SoftDeletes;
 
+	/**
+	 * @var string
+	 */
 	protected $table = "emails";
 
+	/**
+	 * @var string[]
+	 */
 	protected $fillable = [
 		'from',
 		'to',
 		'subject',
 		'message_body',
-		'staff_id',
+		'staff_member_id',
 		'user_id',
 		'file_path'
 	];
 
+	/**
+	 * @return string[][]
+	 */
 	#[ArrayShape(['subject' => "string[]", 'message_body' => "string[]", 'file_path' => "string[]"])]
 	public static function getFields(): array
 	{
@@ -61,6 +70,11 @@ class Email extends Model implements HasMedia
 		return __NAMESPACE__;
 	}
 
+	public static function getClassLead(): string
+	{
+		return 'Email';
+	}
+
 	/**
 	 * Returns the message user wno created the email. Can be null
 	 * @return BelongsTo
@@ -76,11 +90,32 @@ class Email extends Model implements HasMedia
 	 * @return BelongsTo|null
 	 *
 	 */
-	public function staff(): BelongsTo|null
+	public function staffMember(): BelongsTo|null
 	{
-		if (Schema::hasTable('staffs')) {
-			return $this->belongsTo(Staff::class);
+		if (Schema::hasTable('staff_members')) {
+			return $this->belongsTo(StaffMember::class);
 		}
 		return NULL;
+	}
+
+	/**
+	 * The "booted" method of the model.
+	 *
+	 * @return void
+	 */
+	protected static function booted()
+	{
+		if(Schema::hasTable('model_docs'))
+		{
+			ModelDoc::firstOrCreate([
+				'table_name' => (new Email())->getTable(),
+				'slug' => Str::slug((new Email())->getTable()),
+				'name' => Str::replace(Str::snake(Str::afterLast(__CLASS__, '\\')), '_', ' '),
+				'namespace' => __NAMESPACE__,
+				'description' => self::getClassLead(),
+				'comment' => NULL,
+				'default_role' => 'admin'
+			]);
+		}
 	}
 }

@@ -10,6 +10,9 @@ use Eutranet\Setup\Http\Controllers\ModelDocController;
 use Eutranet\Setup\Http\Controllers\SetupStepController;
 use Eutranet\Setup\Http\Controllers\PermissionController;
 use Eutranet\Setup\Http\Controllers\Auth\AuthenticatedSessionController;
+use Eutranet\Setup\Http\Controllers\AgreementController;
+use Eutranet\Setup\Http\Controllers\UserController;
+use Eutranet\Setup\Http\Controllers\StaffMemberController;
 
 Route::middleware(['web', 'guest:admin'])->prefix('setup')->name('setup.')->group(function () {
 	Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -67,9 +70,28 @@ Route::middleware(['web', 'auth:admin'])->prefix('setup')->name('setup.')->group
 	Route::resource('admins', AdministratorController::class)->names('admins');
 	Route::resource('admins.permissions', PermissionController::class)->names('admins.permissions');
 	Route::put('roles/{role}/sync-permission', [RoleController::class, 'syncPermission'])->name('roles.sync-permission');
+	Route::post('roles/{role}/give-permission-to', [RoleController::class, 'givePermissionTo'])->name('roles.give-permission-to');
+	Route::post('roles/{role}/revoke-permission-to', [RoleController::class, 'revokePermissionTo'])->name('roles.revoke-permission-to');
 	Route::resource('roles', RoleController::class)->names('roles')->scoped([
 		'role' => 'name',
 	]);
+	Route::resource('role-has-permissions', RoleHasPermissionController::class)->names('role-has-permissions');
+	Route::resource('setup-processes', SetupProcessController::class)->names('setup-processes');
+	Route::resource('setup-steps', SetupStepController::class)->names('setup-steps');
+	Route::resource('staff-members', StaffMemberController::class)->names('staff-members');
+	Route::resource('users', UserController::class)->names('users');
+
+	/**
+	 * -----------------------------------------------------------------------------
+	 * RESOURCES
+	 * -----------------------------------------------------------------------------
+	 *
+	 * All documents and document categories..
+	 */
+	Route::resource('agreements', AgreementController::class)->names('agreements');
+	Route::resource('emails', EmailController::class)->names('emails');
+	Route::resource('general-terms', GeneralTermController::class)->names('general-terms');
+	Route::resource('guards', GuardController::class)->names('guards');
 
 	/**
 	 * ACCOUNTS, ROLES AND PERMISSIONS
@@ -77,12 +99,11 @@ Route::middleware(['web', 'auth:admin'])->prefix('setup')->name('setup.')->group
 	 *
 	 * Roles and permission tables can be seeded during the setup stage.
 	 */
-	Route::resource('roles', PermissionController::class)->names('roles');
-	Route::resource('permissions', RoleController::class)->names('permissions');
-	Route::get('seed/roles', [RoleController::class, 'seedRoles'])->name('roles.seed');
-	Route::get('seed/permissions', [RoleController::class, 'seedPermissions'])->name('permissions.seed');
-
 	Route::resource('roles', RoleController::class)->names('roles');
+	Route::resource('permissions', PermissionController::class)->names('permissions');
+	//	Route::get('seed/roles', [RoleController::class, 'seedRoles'])->name('roles.seed');
+	//	Route::get('seed/permissions', [RoleController::class, 'seedPermissions'])->name('permissions.seed');
+	Route::resource('roles.permissions', PermissionController::class)->names('roles.permissions');
 
 	/**
 	 * BACK OFFICE ESSENTIAL DOCUMENTATION
@@ -90,9 +111,9 @@ Route::middleware(['web', 'auth:admin'])->prefix('setup')->name('setup.')->group
 	 *
 	 * All documents and document categories..
 	 */
-	Route::resource('doc-categories', DocCategoryController::class)->names('admin.doc-categories');
-	Route::resource('docs', DocController::class)->names('admin.docs');
-	Route::resource('doc-categories.docs', DocController::class)->names('admin.doc-categories.docs');
+	Route::resource('doc-categories', DocCategoryController::class)->names('doc-categories');
+	Route::resource('docs', DocController::class)->names('docs');
+	Route::resource('doc-categories.docs', DocController::class)->names('doc-categories.docs');
 
 	/**
 	 * MESSAGES
@@ -102,6 +123,7 @@ Route::middleware(['web', 'auth:admin'])->prefix('setup')->name('setup.')->group
 	 * All application users are identified by a UNIQUE EMAIL and TAX ID (nif)
 	 * Administrators and staff members are not "users", but staff or admins.
 	 */
+
 	if (Schema::hasTable('messages')) {
 		Route::get('admins/{admin}/messages/history', [MessageController::class, 'history'])->name('admins.messages.history');
 	}

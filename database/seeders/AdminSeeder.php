@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\PermissionRegistrar;
 use Eutranet\Setup\Models\Role;
 use DB;
+use Eutranet\Setup\Models\Admin;
 
 class AdminSeeder extends Seeder
 {
@@ -37,8 +38,8 @@ class AdminSeeder extends Seeder
 			array(
 				'id' => 3,
 				'is_super' => false,
-				'name' => 'Corporate',
-				'email' => 'corporate@admin.tld',
+				'name' => 'Backend manager',
+				'email' => 'backend@admin.tld',
 				'created_at' => now(),
 				'updated_at' => now(),
 			),
@@ -55,6 +56,10 @@ class AdminSeeder extends Seeder
 			DB::table('admins')->insert(
 				$initialArray
 			);
+			Admin::find(1)->assignRole(['super-admin', 'backend-admin', 'content-manager']);
+			Admin::find(2)->assignRole(['data-officer', 'content-manager']);
+			Admin::find(3)->assignRole(['backend-admin']);
+			Admin::find(4)->assignRole(['content-manager']);
 		}
 	}
 }

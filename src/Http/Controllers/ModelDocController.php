@@ -11,7 +11,7 @@ use Eutranet\Setup\Repository\Eloquent\ModelDocRepository;
 use Auth;
 use Illuminate\Contracts\View\View;
 use Eutranet\Setup\Models\ModelDoc;
-use Eutranet\Setup\Models\Admin\SetupStep;
+use Eutranet\Setup\Models\SetupStep;
 
 /**
  * This controller allows admins update model documentation after installation
@@ -34,7 +34,7 @@ class ModelDocController extends Controller
 	 */
 	public function index(): View|Factory|Application
 	{
-		return view('setup.model-docs.index', [
+		return view('setup::model-docs.index', [
 			'modelDocs' => ModelDoc::all()
 		]);
 	}
@@ -45,7 +45,7 @@ class ModelDocController extends Controller
 	 */
 	public function show(ModelDoc $modelDoc): Factory|View|Application
 	{
-		return view('setup.model-docs.show', [
+		return view('setup::model-docs.show', [
 			'modelDoc' => $modelDoc
 		]);
 	}
@@ -67,7 +67,7 @@ class ModelDocController extends Controller
 		];
 		$validated = $request->validate($rules);
 		ModelDoc::firstOrCreate($validated);
-		return redirect()->route('setup.model-docs.show', $modelDoc);
+		return redirect()->route('setup::model-docs.show', $modelDoc);
 	}
 
 	/**
@@ -76,7 +76,7 @@ class ModelDocController extends Controller
 	 */
 	public function edit(ModelDoc $modelDoc): View|Factory|Application
 	{
-		return view('setup.model-docs.edit', [
+		return view('setup::model-docs.edit', [
 			'modelDoc' => $modelDoc
 		]);
 	}
@@ -98,7 +98,7 @@ class ModelDocController extends Controller
 		];
 		$validated = $request->validate($rules);
 		$modelDoc->update($validated);
-		return redirect()->route('setup.model-docs.show', $modelDoc);
+		return redirect()->route('setup::model-docs.show', $modelDoc);
 	}
 
 	/**

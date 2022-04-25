@@ -2,6 +2,7 @@
 
 Ce package est principalement destiné à créer les conditions pour un portail de base.
 
+- corporate name in config
 - un blogue
 - les pages statiques
 - un slider

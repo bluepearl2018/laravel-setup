@@ -1,6 +1,6 @@
-@extends('theme::setup.master')
+@extends('setup::layouts.master')
 @section('content')
-    <x-theme::h1>
+    <x-theme-h1>
         <div class="flex flex-row justify-between items-center">
             <span>
                 {{ __($pluralTitle) }} {{ __('- List') }}
@@ -9,7 +9,7 @@
                 <i class="fa fa-plus"></i>
             </a>
         </div>
-    </x-theme::h1>
+    </x-theme-h1>
     <p class="mb-2 italic">{{__('Click on the edit icon to access the resource.')}}</p>
     <table class="w-full">
         <thead>

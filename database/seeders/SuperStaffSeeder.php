@@ -43,32 +43,38 @@ class SuperStaffSeeder extends Seeder
 				'email_verified_at' => NULL,
 				'lead' => '{"en":"As the corporate HR Manager..."}',
 				'body' => '{"en":"Human resources managers supervise a company or organization\'s hiring process, from recruiting, interviewing, and hiring new staff. They help connect executives with employees, build an employer brand, improve employee engagement, build strategic talent resources plans."}',
-        'password' => '$2y$10$zsrMnjDpC0zVk7agH3EGYuzrtDugG0ORhRtYVOGCcNeyIqQE6TGHC',
-        'representante' => 'General',
-        'is_active' => '1',
-        'is_super' => '1',
-        'created_at' => '2022-04-16 17:51:23',
-        'updated_at' => NULL,
-        'deleted_at' => NULL,
-        'agency_id' => '1',
+		        'password' => '$2y$10$zsrMnjDpC0zVk7agH3EGYuzrtDugG0ORhRtYVOGCcNeyIqQE6TGHC',
+		        'representante' => 'General',
+		        'is_active' => '1',
+		        'is_super' => '1',
+		        'created_at' => '2022-04-16 17:51:23',
+		        'updated_at' => NULL,
+		        'deleted_at' => NULL
 ],
 ];
 
 
-		if (DB::table('staffs')->get()->count() < 1) {
-			DB::table('staffs')->insert(
+		if (DB::table('staff_members')->get()->count() < 1) {
+			DB::table('staff_members')->insert(
 				$staffArray
 			);
 			$superStaffRole = DB::table('roles')->where('name', 'super-staff')->get();
 			if($superStaffRole !== NULL)
 			{
-				DB::table('model_has_roles')->insert(
-					[
-						'role_id' => $superStaffRole[0]->id,
-						'model_type' => 'Eutranet\Setup\Models\Staff',
-						'model_id' => '1'
-					]
-				);
+				if(DB::table('model_has_roles')
+						->where('role_id', $superStaffRole[0]->id)
+						->where('model_type', 'Eutranet\Setup\Models\StaffMember')
+						->where('model_id', '1')
+						->get() === NULL)
+				{
+					DB::table('model_has_roles')->insert(
+						[
+							'role_id' => $superStaffRole[0]->id,
+							'model_type' => 'Eutranet\Setup\Models\StaffMember',
+							'model_id' => '1'
+						]
+					);
+				}
 			}
 		}
 	}

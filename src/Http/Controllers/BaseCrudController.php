@@ -3,6 +3,7 @@
 namespace Eutranet\Setup\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Eutranet\Commons\Models\Language;
 use Flash;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -10,7 +11,10 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Str;
-use Eutranet\Commons\Models\Language;
+use function __;
+use function redirect;
+use function view;
+use function config;
 
 /**
  * The Base Crud Controller is used as a template by all common ressource controller.
@@ -47,19 +51,34 @@ abstract class BaseCrudController extends Controller
 
 	/**
 	 * @param $model
-	 * @param $viewPath
 	 * @param $resourceName
 	 * @param $tableName
 	 */
-	public function __construct($model, $viewPath, $resourceName, $tableName)
+	public function __construct($model, $resourceName, $tableName)
 	{
 		$this->middleware('auth:admin');
 		$this->resourceName = $resourceName;
 		$this->tableName = $tableName;
 		$this->pluralResourceName = Str::plural($resourceName);
-		$this->viewPath = $viewPath;
+		$this->viewPath = 'commons::crud';
 		$this->model = $model;
 		$this->defaultLanguage = Language::where('code', config('app.locale'))->get()->first();
+	}
+
+	/**
+	 * Get the input from the request.
+	 */
+	public function index(): Factory|View|Application
+	{
+		return view($this->viewPath . '.index', [
+			'fields' => $this->model->getFields(),
+			'entries' => $this->model->orderBy(array_keys($this->model->getFields())[0], 'ASC')->paginate(),
+			'model' => $this->model,
+			'tableName' => $this->tableName,
+			'singularTitle' => Str::title($this->resourceName),
+			'pluralTitle' => Str::title($this->pluralResourceName),
+			'defaultLanguage' => $this->defaultLanguage->name
+		]);
 	}
 
 	/**
@@ -104,11 +123,37 @@ abstract class BaseCrudController extends Controller
 	public function show($id): Factory|View|Application
 	{
 		return view($this->viewPath . '.show', [
+			'lead' => $this->model->getClassLead(),
+			'fields' => $this->model->getFields(),
 			'singularTitle' => $this->resourceName,
+			'class' => Str::singular(Str::snake($this->tableName)),
+			'routePrefix' => 'setup.',
 			'tableName' => $this->tableName,
 			'model' => $this->model,
+			'entry' => $this->model->findOrFail($id),
 			'resource' => $this->model->findOrFail($id),
 			'defaultLanguage' => $this->defaultLanguage->name
+		]);
+
+	}
+
+	/**
+	 * @param $id
+	 * @return Factory|View|Application
+	 */
+	public function edit($id): Factory|View|Application
+	{
+		return view($this->viewPath . '.edit', [
+			'lead' => $this->model->getClassLead(),
+			'fields' => $this->model->getFields(),
+			'singularTitle' => $this->resourceName,
+			'class' => Str::singular(Str::snake($this->tableName)),
+			'routePrefix' => 'setup.',
+			'tableName' => $this->tableName,
+			'model' => $this->model,
+			'defaultLanguage' => $this->defaultLanguage->name,
+			'entry' => $this->model->findOrFail($id),
+			'resource' => $this->model->findOrFail($id),
 		]);
 	}
 
@@ -146,18 +191,4 @@ abstract class BaseCrudController extends Controller
 		return $this->index();
 	}
 
-	/**
-	 * Get the input from the request.
-	 */
-	public function index(): Factory|View|Application
-	{
-		return view($this->viewPath . '.index', [
-			'entries' => $this->model->orderBy('name', 'ASC')->paginate(),
-			'model' => $this->model,
-			'tableName' => $this->tableName,
-			'singularTitle' => Str::title($this->resourceName),
-			'pluralTitle' => Str::title($this->pluralResourceName),
-			'defaultLanguage' => $this->defaultLanguage->name
-		]);
-	}
 }

@@ -158,7 +158,7 @@ class SetupStepRepository extends BaseRepository implements EutranetSetupInterfa
 			'frontend' => array(
 				'Corporate - Information' => Schema::hasTable('corporates') ? 'OK' : 'Copy/Paste, migrate create_corporates_table',
 				'Agencies (Sales)' => Schema::hasTable('agencies') ? 'OK' : 'Copy/Paste, migrate create_agencies_table',
-				'Corporate Staff (Sales & Marketing)' => Schema::hasTable('corporate_staff') ? 'OK' : 'Copy/Paste, migrate create_corporate_staff_table',
+				'Corporate StaffMember (Sales & Marketing)' => Schema::hasTable('corporate_staff_member') ? 'OK' : 'Copy/Paste, migrate create_corporate_staff_member_table',
 				'Services (Marketing)' => Schema::hasTable('services') ? 'OK' : 'Copy/Paste, migrate create_services_table',
 				'Slides (Marketing)' => Schema::hasTable('slides') ? 'OK' : 'Copy/Paste, migrate create_slides_table',
 				'Pages (Static pages)' => Schema::hasTable('pages') ? 'OK' : 'Copy/Paste, migrate create_pages_table',
@@ -183,7 +183,7 @@ class SetupStepRepository extends BaseRepository implements EutranetSetupInterfa
 			),
 			'people tables' => array(
 				'Aministrators table' => Schema::hasTable('admins') ? 'OK' : 'Upload create_admins_table to migrations',
-				'Staff members table' => Schema::hasTable('staffs') ? 'OK' : 'Upload create_staffs_table to migrations',
+				'Staff members table' => Schema::hasTable('staff_members') ? 'OK' : 'Upload create_staffs_table to migrations',
 				'Users members table' => Schema::hasTable('users') ? 'OK' : 'Upload create_users_table to migrations',
 			),
 			'user-notifications' => array(

@@ -4,7 +4,7 @@ namespace Eutranet\Setup\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use DB;
-use Eutranet\Be\Models\Agreement;
+use Eutranet\Setup\Models\Agreement;
 
 class AgreementSeeder extends Seeder
 {

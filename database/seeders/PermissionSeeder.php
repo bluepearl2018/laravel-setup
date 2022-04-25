@@ -6,6 +6,7 @@ use Eutranet\Setup\Models\ModelDoc;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\PermissionRegistrar;
 use Eutranet\Setup\Models\Permission;
+use Str;
 
 class PermissionSeeder extends Seeder
 {
@@ -17,29 +18,29 @@ class PermissionSeeder extends Seeder
 	public function run()
 	{
 		app()[PermissionRegistrar::class]->forgetCachedPermissions();
-
 		// Set the crud verbs
-		$cruds = ['create', 'read', 'update', 'delete', 'translate'];
-
-		// Get the available App/models...
-		$modelDocs = ModelDoc::all();
+		$cruds = ['list', 'create', 'read', 'update', 'delete', 'translate'];
 		$guards = array('admin', 'staff', 'web');
-
+		$tables = config('eutranet-setup.tables');
 		// If we have model documentation...
-		if ($modelDocs->count() > 0) {
-			// Generate default permissions for each App/models/folders...
-			foreach ($modelDocs as $modelDoc) {
-				// If the namespace is App\Models\Admin
-				foreach ($guards as $guard) {
-					foreach ($cruds as $operation) {
-						Permission::firstOrCreate([
-							'name' => $operation . '-' . $modelDoc->slug,
+		// Generate default permissions for each App/models/folders...
+		foreach ($tables as $tableName) {
+			// If the namespace is App\Models\Admin
+			foreach ($guards as $guard) {
+				foreach ($cruds as $operation) {
+					Permission::updateOrCreate(
+						[
+							'name' => $operation . '-' . Str::slug($tableName),
 							'guard_name' => $guard
-						]);
-					}
+						],
+						[
+							'name' => $operation . '-' . Str::slug($tableName),
+							'guard_name' => $guard
+						]
+					);
 				}
 			}
 		}
-//		$this->call(RoleDefaultPermissionsSeeder::class);
+
 	}
 }

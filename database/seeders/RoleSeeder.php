@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Seeder;
 use Eutranet\Setup\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
+use DB;
+use Eutranet\Setup\Models\StaffMember;
 
 class RoleSeeder extends Seeder
 {
@@ -35,7 +37,7 @@ class RoleSeeder extends Seeder
 					'description' => '{"en":"GDPR Data officer role.", "pt":"GDPR Data officer", "fr":"Délégué aux données RGPD"}',
 				),
 				array(
-					'name' => 'laravel-corporate',
+					'name' => 'backend-admin',
 					'guard_name' => 'admin',
 					'description' => '{"en":"General manager", "pt":"Director geral", "fr":"Directeur général"}',
 				),
@@ -47,7 +49,7 @@ class RoleSeeder extends Seeder
 				array(
 					'name' => 'super-staff',
 					'guard_name' => 'staff',
-					'description' => '{"en":"Staff manager", "pt":"Gestor de pessoal", "fr":"Directeur du personnel"}',
+					'description' => '{"en":"StaffMember manager", "pt":"Gestor de pessoal", "fr":"Directeur du personnel"}',
 				),
 				array(
 					'name' => 'staff',
@@ -81,6 +83,7 @@ class RoleSeeder extends Seeder
 				),
 			];
 
+			// Assign roles to the first four admins
 			foreach ($roles as $role) {
 				$newRole = Role::firstOrCreate([
 					'name' => $role['name'], // First
@@ -91,6 +94,16 @@ class RoleSeeder extends Seeder
 					->setTranslation('description', 'fr', json_decode($role['description'], true)['fr'])
 					->save();
 			}
+
+			// Assign the super-staff role to the first staff member
+			if(DB::table('model_has_roles')
+					->where('role_id', 5)
+					->where('model_type', 'Eutranet\Setup\Models\StaffMember')
+					->where('model_id', '1')
+					->get()->first() === NULL){
+					StaffMember::find(1)->assignRole('super-staff');
+			}
+
 		}
 	}
 }

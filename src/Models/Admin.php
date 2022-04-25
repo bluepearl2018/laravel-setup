@@ -13,6 +13,8 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Traits\HasPermissions;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 /**
  * The Admin class is meant to describe and save administrators into DB
@@ -80,6 +82,14 @@ class Admin extends Authenticatable implements HasMedia, MustVerifyEmail
 	}
 
 	/**
+	 * @return string
+	 */
+	public static function getClassLead(): string
+	{
+		return "Administrators ensure the smooth running of the platform, in particular by ensuring its maintenance, but also by managing user privileges, checking logs and debugging.";
+	}
+
+	/**
 	 * @return void
 	 */
 	public static function boot()
@@ -87,6 +97,27 @@ class Admin extends Authenticatable implements HasMedia, MustVerifyEmail
 		parent::boot();
 	}
 
+
+	/**
+	 * The "booted" method of the model.
+	 *
+	 * @return void
+	 */
+	protected static function booted()
+	{
+		if(Schema::hasTable('model_docs'))
+		{
+			ModelDoc::firstOrCreate([
+				'table_name' => (new Admin())->getTable(),
+				'slug' => Str::slug((new Admin())->getTable()),
+				'name' => Str::replace(Str::snake(Str::afterLast(__CLASS__, '\\')), '_', ' '),
+				'namespace' => __NAMESPACE__,
+				'description' => self::getClassLead(),
+				'comment' => NULL,
+				'default_role' => 'admin'
+			]);
+		}
+	}
 	/**
 	 * Always encrypt the password when it is updated.
 	 *

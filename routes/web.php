@@ -11,7 +11,7 @@
 Route::middleware(['web'])->group(function () {
 
 	Route::any('installation/warning/{$message}', function ($message = NULL) {
-		return view('frontend::layouts.master', ['message' => $message]);
+		return view('theme::layouts.guest', ['message' => $message]);
 	})->name('installation.warning');
 
 });

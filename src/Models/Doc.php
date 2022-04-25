@@ -2,8 +2,6 @@
 
 namespace Eutranet\Setup\Models;
 
-use App\Models\Admin\Admin;
-use App\Models\Contents\Tag;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,8 +12,11 @@ use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Spatie\Permission\Traits\HasRoles;
 use Spatie\Translatable\HasTranslations;
+use Spatie\Permission\Traits\HasRoles;
+use Str;
+use Illuminate\Support\Facades\Schema;
+use Eutranet\Frontend\Models\Tag;
 
 /**
  * Dpc class to save documentation pages (Back office)
@@ -44,16 +45,6 @@ class Doc extends Model implements HasMedia
 	protected array $translatable = ['meta_description', 'meta_title', 'title', 'lead', 'body'];
 
 	/**
-	 * This static function is essential for the documentation service provider
-	 * The namespace is saved into doc_models table
-	 * @return string
-	 */
-	public static function getNamespace(): string
-	{
-		return __NAMESPACE__;
-	}
-
-	/**
 	 * @return string[][]
 	 */
 
@@ -70,6 +61,25 @@ class Doc extends Model implements HasMedia
 			'lead' => ['input', 'textarea', 'required', 'Doc page lead', 'Doc page Intro'],
 			'body' => ['input', 'textarea', 'optional', 'Doc page body', 'Use the text formatter if needed']
 		];
+	}
+
+
+	/**
+	 * This static function is essential for the documentation service provider
+	 * The namespace is saved into doc_models table
+	 * @return string
+	 */
+	public static function getNamespace(): string
+	{
+		return __NAMESPACE__;
+	}
+
+	/**
+	 * @return string
+	 */
+	public static function getClassLead(): string
+	{
+		return "The software documentation.";
 	}
 
 	/**
@@ -133,5 +143,26 @@ class Doc extends Model implements HasMedia
 	public function tags(): MorphToMany
 	{
 		return $this->morphToMany(Tag::class, 'taggable');
+	}
+
+	/**
+	 * The "booted" method of the model.
+	 *
+	 * @return void
+	 */
+	protected static function booted()
+	{
+		if(Schema::hasTable('model_docs'))
+		{
+			ModelDoc::firstOrCreate([
+				'table_name' => (new Doc())->getTable(),
+				'slug' => Str::slug((new Doc())->getTable()),
+				'name' => Str::replace(Str::snake(Str::afterLast(__CLASS__, '\\')), '_', ' '),
+				'namespace' => __NAMESPACE__,
+				'description' => self::getClassLead(),
+				'comment' => NULL,
+				'default_role' => 'admin'
+			]);
+		}
 	}
 }

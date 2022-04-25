@@ -46,7 +46,7 @@ class RoleController extends Controller
 	 */
 	public function show(Role $role): View|Factory|Application
 	{
-		Auth::user()->hasPermissionTo('read-role', 'admin');
+		Auth::user()->hasPermissionTo('read-roles', 'admin');
 		return view('setup::roles.show', ['role' => $role, 'modelDocs' => ModelDoc::all()]);
 	}
 
@@ -59,11 +59,51 @@ class RoleController extends Controller
 	 */
 	public function syncPermission(Request $request, Role $role): RedirectResponse
 	{
-
 		if ($request->permission) {
 			$role->syncPermissions($request->permission);
 		}
 		return redirect()->back();
 	}
 
+	/**
+	 * Syncrhonize permission for the current role.
+	 *
+	 * @param Request $request
+	 * @param Role $role
+	 * @return RedirectResponse
+	 */
+	public function givePermissionTo(Request $request, Role $role): RedirectResponse
+	{
+		if ($request->permission_id) {
+			$role->givePermissionTo($request->permission_id);
+		}
+		return redirect()->back();
+	}
+
+	/**
+	 * Syncrhonize permission for the current role.
+	 *
+	 * @param Request $request
+	 * @param Role $role
+	 * @return RedirectResponse
+	 */
+	public function revokePermissionTo(Request $request, Role $role): RedirectResponse
+	{
+		if ($request->permission_id) {
+			$role->revokePermissionTo($request->permission_id);
+		}
+		return redirect()->back();
+	}
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @param Role $role
+	 * @return RedirectResponse
+	 */
+	public function destroy(Role $role) : RedirectResponse
+	{
+		$role->delete();
+		return redirect(route('setup.roles.index'));
+	}
 }

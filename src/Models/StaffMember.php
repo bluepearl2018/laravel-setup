@@ -22,15 +22,23 @@ use Spatie\Translatable\HasTranslations;
 use Eutranet\Be\Models\Agency;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Traits\HasPermissions;
+use Illuminate\Support\Str;
+use Eutranet\Commons\Models\Gender;
+use Eutranet\Be\Models\Corporate;
+use Eutranet\Be\Models\CorporateStaffMember;
+use Eutranet\Be\Models\StaffTeam;
+use Eutranet\Be\Models\Team;
+use Eutranet\Commons\Models\Appellative;
+use Eutranet\Commons\Models\Country;
 
 /**
- * The Staff class has all users of the back-office
+ * The StaffMember class has all users of the back-office
  * The staff performs all operation on users, sales/leads and consultations.
  * Staff members can have a portfolio of uses (StaffUser)
  * Staff members can take part to a team (StaffTeam)
  *
  */
-class Staff extends Authenticatable implements HasMedia, MustVerifyEmail
+class StaffMember extends Authenticatable implements HasMedia, MustVerifyEmail
 {
 	use HasApiTokens;
 	use Notifiable;
@@ -47,7 +55,7 @@ class Staff extends Authenticatable implements HasMedia, MustVerifyEmail
 	/**
 	 * @var string
 	 */
-	protected $table = "staffs";
+	protected $table = "staff_members";
 
 	/**
 	 * @var string
@@ -89,40 +97,39 @@ class Staff extends Authenticatable implements HasMedia, MustVerifyEmail
 	public static function getFields(): array
 	{
 		return [
-			'nif' => ['input', 'pttaxid', 'required', trans('staffs.Tax ID'), trans('staffs.Enter the user Tax id')],
-			'login' => ['input', 'text', 'required', trans('staffs.Login'), trans('staffs.This is not your email, but an internal pattern')],
-			'email' => ['input', 'email', 'required', trans('staffs.Account email'), trans('staffs.This MUST NOT be deleted or updated')],
-			'representante' => ['input', 'text', 'required', trans('staffs.Representante'), trans('staffs.Deprecated'), 'readonly'],
-			'gender_id' => ['select', 'list', 'required', trans('staffs.Gender'), trans('staffs.Select the gender'), 'App\Models\Commons\Gender'],
-			'appellative_id' => ['select', 'list', 'required', trans('staffs.Appellative'), trans('staffs.Select the title'), 'App\Models\Commons\Appellative'],
-			'first_name' => ['input', 'text', 'required', trans('staffs.First Name'), trans('staffs.Enter a first name')],
-			'last_name' => ['input', 'text', 'required', trans('staffs.Last Name'), trans('staffs.Enter a last name')],
-			'function' => ['input', 'text', 'optional', trans('staffs.Function'), trans('staffs.Enter a function')],
 
-			'date_of_birth' => ['dates', 'date', 'required', trans('staffs.Date of Birth'), trans('staffs.Select date of birth')],
+			'login' => ['input', 'text', 'required', trans('staff-members.Me'), trans('staff-members.This is not your email, but an internal pattern')],
+			'email' => ['input', 'email', 'required', trans('staff-members.Account email'), trans('staff-members.This MUST NOT be deleted or updated')],
+			'representante' => ['input', 'text', 'required', trans('staff-members.Representante'), trans('staff-members.Deprecated'), 'readonly'],
+			'gender_id' => ['select', 'list', 'required', trans('staff-members.Gender'), trans('staff-members.Select the gender'), 'Eutranet\Commons\Models\Gender'],
+			'appellative_id' => ['select', 'list', 'required', trans('staff-members.Appellative'), trans('staff-members.Select the title'), 'Eutranet\Commons\Models\Appellative'],
+			'first_name' => ['input', 'text', 'required', trans('staff-members.First Name'), trans('staff-members.Enter a first name')],
+			'last_name' => ['input', 'text', 'required', trans('staff-members.Last Name'), trans('staff-members.Enter a last name')],
+			'function' => ['input', 'text', 'optional', trans('staff-members.Function'), trans('staff-members.Enter a function')],
 
-			'address1' => ['input', 'text', 'required', trans('staffs.Address First Line'), trans('staffs.Max. 35 characters"')],
-			'address2' => ['input', 'text', 'optional', trans('staffs.Address Second Line'), trans('staffs.Max. 35 characters"')],
-			'postal_code' => ['input', 'text', 'required', trans('staffs.Postal code'), trans('staffs.Enter a postal code')],
-			'city' => ['input', 'text', 'required', trans('staffs.City'), trans('staffs.Enter a city')],
-			'council' => ['input', 'text', 'required', trans('staffs.Council'), trans('staffs.Enter a council')],
-			'district' => ['input', 'text', 'required', trans('staffs.District'), trans('staffs.Enter a district')],
+			'date_of_birth' => ['dates', 'date', 'required', trans('staff-members.Date of Birth'), trans('staff-members.Select date of birth')],
 
-			'country_id' => ['select', 'list', 'required', trans('staffs.Country'), trans('staffs.Select a country'), '\Eutranet\Commons\Models\Country'],
+			'address1' => ['input', 'text', 'required', trans('staff-members.Address First Line'), trans('staff-members.Max. 35 characters"')],
+			'address2' => ['input', 'text', 'optional', trans('staff-members.Address Second Line'), trans('staff-members.Max. 35 characters"')],
+			'postal_code' => ['input', 'text', 'required', trans('staff-members.Postal code'), trans('staff-members.Enter a postal code')],
+			'city' => ['input', 'text', 'required', trans('staff-members.City'), trans('staff-members.Enter a city')],
+			'council' => ['input', 'text', 'required', trans('staff-members.Council'), trans('staff-members.Enter a council')],
+			'district' => ['input', 'text', 'required', trans('staff-members.District'), trans('staff-members.Enter a district')],
 
-			'phone' => ['input', 'phone', 'required', trans('staffs.Phone'), trans('staffs.Should be formatted like +351.999123456')],
-			'mobile' => ['input', 'phone', 'required', trans('staffs.Mobile phone'), trans('staffs.Should be formatted like +351.999123456')],
+			'country_id' => ['select', 'list', 'required', trans('staff-members.Country'), trans('staff-members.Select a country'), '\Eutranet\Commons\Models\Country'],
 
-			'lead' => ['input', 'textarea', 'optional', trans('staffs.Lead'), trans('staffs.Enter a short intro')],
-			'body' => ['input', 'textarea', 'optional', trans('staffs.Resume'), trans('staffs.Entre a kind of resume')],
+			'phone' => ['input', 'phone', 'required', trans('staff-members.Phone'), trans('staff-members.Should be formatted like +351.999123456')],
+			'mobile' => ['input', 'phone', 'required', trans('staff-members.Mobile phone'), trans('staff-members.Should be formatted like +351.999123456')],
 
-			'agency_id' => ['select', 'list', 'required', 'Agency', 'Select an agency', 'App\Models\Corporate\Agency'],
+			'lead' => ['input', 'textarea', 'optional', trans('staff-members.Lead'), trans('staff-members.Enter a short intro')],
+			'body' => ['input', 'textarea', 'optional', trans('staff-members.Resume'), trans('staff-members.Entre a kind of resume')],
+
 		];
 	}
 
 	public static function getClassLead(): string
 	{
-		return '';
+		return 'Staff members';
 	}
 
 	/**
@@ -131,7 +138,7 @@ class Staff extends Authenticatable implements HasMedia, MustVerifyEmail
 	 */
 	public function registerMediaCollections(): void
 	{
-		$this->addMediaCollection('staffs');
+		$this->addMediaCollection('staff-members');
 	}
 
 	/**
@@ -176,21 +183,21 @@ class Staff extends Authenticatable implements HasMedia, MustVerifyEmail
 			array('group' => 'fields', 'key' => 'appellative_id', 'text' => '{"en":"Appellative", "pt":"Titulo"}'),
 			array('group' => 'fields', 'key' => 'gender_id', 'text' => '{"en":"Gender", "pt":"Gênero"}'),
 			array('group' => 'fields', 'key' => 'email', 'text' => '{"en":"Email", "pt":"Email"}'),
-			array('group' => 'staffs', 'key' => 'This MUST NOT be deleted or updated', 'text' => '{"en":"This MUST NOT be deleted or updated", "pt":"Náo deve ser modificado (ADMIN ONLY)"}'),
-			array('group' => 'staffs', 'key' => 'Enter the user Tax id', 'text' => '{"en":"Enter the user Tax id", "pt":"Indique o NIF"}'),
-			array('group' => 'staffs', 'key' => 'Tax ID', 'text' => '{"en":"Staff TAX ID", "pt":"NIF do membro do pessoal"}'),
-			array('group' => 'fields', 'key' => 'login', 'text' => '{"en":"Login", "pt":"Login"}'),
-			array('group' => 'staffs', 'key' => 'This is not your email, but an internal pattern', 'text' => '{"en":"This is not your email, but an internal pattern", "pt":"Não é o seu mail."}'),
+			array('group' => 'staff-members', 'key' => 'This MUST NOT be deleted or updated', 'text' => '{"en":"This MUST NOT be deleted or updated", "pt":"Náo deve ser modificado (ADMIN ONLY)"}'),
+			array('group' => 'staff-members', 'key' => 'Enter the user Tax id', 'text' => '{"en":"Enter the user Tax id", "pt":"Indique o NIF"}'),
+			array('group' => 'staff-members', 'key' => 'Tax ID', 'text' => '{"en":"StaffMember TAX ID", "pt":"NIF do membro do pessoal"}'),
+			array('group' => 'fields', 'key' => 'login', 'text' => '{"en":"Me", "pt":"Me"}'),
+			array('group' => 'staff-members', 'key' => 'This is not your email, but an internal pattern', 'text' => '{"en":"This is not your email, but an internal pattern", "pt":"Não é o seu mail."}'),
 
 			// Todo Project specific checks
 			array('group' => 'fields', 'key' => 'representante', 'text' => '{"en":"Representante", "pt":"Representante"}'),
-			array('group' => 'staffs', 'key' => 'Deprecated', 'text' => '{"en":"Deprecated", "pt":"Não se applica, certo ?."}'),
-			array('group' => 'staffs', 'key' => 'Select the gender', 'text' => '{"en":"Select the gender", "pt":"Indique o gênero"}'),
-			array('group' => 'staffs', 'key' => 'Select the title', 'text' => '{"en":"Select the title", "pt":"Indique o titulo"}'),
+			array('group' => 'staff-members', 'key' => 'Deprecated', 'text' => '{"en":"Deprecated", "pt":"Não se applica, certo ?."}'),
+			array('group' => 'staff-members', 'key' => 'Select the gender', 'text' => '{"en":"Select the gender", "pt":"Indique o gênero"}'),
+			array('group' => 'staff-members', 'key' => 'Select the title', 'text' => '{"en":"Select the title", "pt":"Indique o titulo"}'),
 			array('group' => 'fields', 'key' => 'first_name', 'text' => '{"en":"First name", "pt":"Nome proprio"}'),
 			array('group' => 'fields', 'key' => 'last_name', 'text' => '{"en":"Last name", "pt":"Nome"}'),
-			array('group' => 'staffs', 'key' => 'Enter a first name', 'text' => '{"en":"Enter a first name", "pt":"Indique o nome proprio"}'),
-			array('group' => 'staffs', 'key' => 'Enter a last name', 'text' => '{"en":"Enter a last name", "pt":"Indique o nome"}'),
+			array('group' => 'staff-members', 'key' => 'Enter a first name', 'text' => '{"en":"Enter a first name", "pt":"Indique o nome proprio"}'),
+			array('group' => 'staff-members', 'key' => 'Enter a last name', 'text' => '{"en":"Enter a last name", "pt":"Indique o nome"}'),
 
 
 		);
@@ -244,7 +251,7 @@ class Staff extends Authenticatable implements HasMedia, MustVerifyEmail
 	 */
 	public function corporate(): BelongsToMany
 	{
-		return $this->belongsToMany(Corporate::class, CorporateStaff::class);
+		return $this->belongsToMany(Corporate::class, CorporateStaffMember::class);
 	}
 
 	/**
@@ -324,5 +331,26 @@ class Staff extends Authenticatable implements HasMedia, MustVerifyEmail
 	public function country(): BelongsTo
 	{
 		return $this->belongsTo(Country::class, 'country_id');
+	}
+
+	/**
+	 * The "booted" method of the model.
+	 *
+	 * @return void
+	 */
+	protected static function booted()
+	{
+		if(\Illuminate\Support\Facades\Schema::hasTable('model_docs'))
+		{
+			ModelDoc::firstOrCreate([
+				'table_name' => (new StaffMember())->getTable(),
+				'slug' => Str::slug((new StaffMember())->getTable()),
+				'name' => Str::replace(Str::snake(Str::afterLast(__CLASS__, '\\')), '_', ' '),
+				'namespace' => __NAMESPACE__,
+				'description' => self::getClassLead(),
+				'comment' => NULL,
+				'default_role' => 'admin'
+			]);
+		}
 	}
 }

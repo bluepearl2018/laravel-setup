@@ -8,6 +8,9 @@ use Eutranet\Setup\Console\Commands\EutranetInstallSetupCommand;
 use Illuminate\Routing\Router;
 use Eutranet\Setup\Http\Middleware\EutranetSetupInstalled;
 use Eutranet\Setup\Http\Middleware\SetupMigratedMiddleware;
+use Eutranet\Setup\View\Components\Logo;
+use Eutranet\Setup\View\Composers\SetupConfigComposer;
+use Eutranet\Setup\Providers\SetupMenuServiceProvider;
 
 class SetupServiceProvider extends PackageServiceProvider
 {
@@ -15,8 +18,8 @@ class SetupServiceProvider extends PackageServiceProvider
 	{
 		$package
 			->name('laravel-setup')
-			->hasConfigFile(['eutranet-setup', 'permission']) // php artisan vendor:publish --tag=your-laravel-init-name-config
-			->hasRoutes(['auth', 'web', 'back', 'setup'])
+			->hasConfigFile(['eutranet-setup', 'corporate', 'permission']) // php artisan vendor:publish --tag=your-laravel-init-name-config
+			->hasRoutes(['config', 'auth', 'web', 'back', 'setup'])
 			->hasViews('setup') // ->hasViews('custom-view-namespace::myView.subview');
 			->hasMigration('add_description_to_permission_tables')
 			->hasMigration('create_agreements_table')
@@ -32,8 +35,8 @@ class SetupServiceProvider extends PackageServiceProvider
 			->hasMigration('create_model_docs_table')
 			->hasMigration('create_doc_categories_table')
 			->hasMigration('create_docs_table')
-			// ->hasViewComponent('setup', Alert::class)
-			// ->hasViewComposer('*', ModelDocComposer::class)
+			->hasViewComponent('setup', Logo::class)
+			->hasViewComposer('setup::config', SetupConfigComposer::class)
 			// ->hasViewComposer('*', SetupComposer::class)
 			->sharesDataWithAllViews('companyName', config('eutranet-setup.name'))
 			->hasTranslations()
@@ -58,6 +61,7 @@ class SetupServiceProvider extends PackageServiceProvider
 		parent::register();
 		// ... other things
 //		$this->registerRoutes();
+		$this->app->register(SetupMenuServiceProvider::class);
 		$this->loadMigrationsFrom(app_path('Eutranet/Setup/database/migrations'));
 	}
 
@@ -66,7 +70,7 @@ class SetupServiceProvider extends PackageServiceProvider
 //		Route::group($this->routeConfiguration(), function () {
 //			$this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
 //			$this->loadRoutesFrom(__DIR__ . '/../routes/back.php');
-//			$this->loadRoutesFrom(__DIR__ . '/../routes/setup.php');
+//			$this->loadRoutesFrom(__DIR__ . '/../routes/test.php');
 //		});
 	}
 

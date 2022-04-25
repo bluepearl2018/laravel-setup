@@ -36,7 +36,7 @@ class AuthenticatedSessionController extends Controller
 			'password' => ['required'],
 		]);
 
-		if (class_exists('Eutranet\Setup\Models\Staff') && Auth::guard('staff')->attempt($credentials)) {
+		if (class_exists('Eutranet\Setup\Models\StaffMember') && Auth::guard('staff')->attempt($credentials)) {
 			$request->session()->regenerate();
 			return redirect()->intended(RouteServiceProvider::STAFF);
 		} elseif (class_exists('Eutranet\Setup\Models\Admin') && Auth::guard('admin')->attempt($credentials)) {

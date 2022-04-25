@@ -13,6 +13,8 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Translatable\HasTranslations;
 use JetBrains\PhpStorm\ArrayShape;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 /**
  * The Setup Step model allows us to save information about the setup process
@@ -77,6 +79,16 @@ class SetupStep extends Model implements HasMedia
 	 * The namespace is saved into doc_models table
 	 * @return string
 	 */
+	public static function getClassLead(): string
+	{
+		return "The setup steps are always part of a setup process.";
+	}
+
+	/**
+	 * This static function is essential for the documentation service provider
+	 * The namespace is saved into doc_models table
+	 * @return string
+	 */
 	public static function getNamespace(): string
 	{
 		return __NAMESPACE__;
@@ -88,5 +100,26 @@ class SetupStep extends Model implements HasMedia
 	public function registerMediaCollections(): void
 	{
 		$this->addMediaCollection('laravel-setup-steps');
+	}
+
+	/**
+	 * The "booted" method of the model.
+	 *
+	 * @return void
+	 */
+	protected static function booted()
+	{
+		if(Schema::hasTable('model_docs'))
+		{
+			ModelDoc::firstOrCreate([
+				'table_name' => (new SetupStep())->getTable(),
+				'slug' => Str::slug((new SetupStep())->getTable()),
+				'name' => Str::replace(Str::snake(Str::afterLast(__CLASS__, '\\')), '_', ' '),
+				'namespace' => __NAMESPACE__,
+				'description' => self::getClassLead(),
+				'comment' => NULL,
+				'default_role' => 'admin'
+			]);
+		}
 	}
 }

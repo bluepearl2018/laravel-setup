@@ -3,6 +3,8 @@
 namespace Eutranet\Setup\Models;
 
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 /**
  * The Permission class is an extension of the original
@@ -19,6 +21,21 @@ class Permission extends \Spatie\Permission\Models\Permission
 	protected array $translatable = ['description'];
 
 	/**
+	 * This static function is essential for the documentation service provider
+	 * The namespace is saved into doc_models table
+	 * @return string
+	 */
+	public static function getNamespace(): string
+	{
+		return __NAMESPACE__;
+	}
+
+	public static function getClassLead(): string
+	{
+		return "The permissions can be associated with roles or be stand-alone.";
+	}
+
+	/**
 	 * @return void
 	 */
 	public static function boot()
@@ -27,12 +44,23 @@ class Permission extends \Spatie\Permission\Models\Permission
 	}
 
 	/**
-	 * This static function is essential for the documentation service provider
-	 * The namespace is saved into doc_models table
-	 * @return string
+	 * The "booted" method of the model.
+	 *
+	 * @return void
 	 */
-	public static function getNamespace(): string
+	protected static function booted()
 	{
-		return __NAMESPACE__;
+		if(Schema::hasTable('model_docs'))
+		{
+			ModelDoc::firstOrCreate([
+				'table_name' => (new Permission())->getTable(),
+				'slug' => Str::slug((new Permission())->getTable()),
+				'name' => Str::replace(Str::snake(Str::afterLast(__CLASS__, '\\')), '_', ' '),
+				'namespace' => __NAMESPACE__,
+				'description' => self::getClassLead(),
+				'comment' => NULL,
+				'default_role' => 'admin'
+			]);
+		}
 	}
 }

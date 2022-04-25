@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('namespace')->nullable()->default(NULL);
             $table->longText('description')->nullable();
             $table->longText('comment')->nullable();
+            $table->string('default_role')->nullable()->default('admin');
             $table->nullableTimestamps();
         });
 

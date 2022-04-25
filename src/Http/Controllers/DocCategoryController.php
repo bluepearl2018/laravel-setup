@@ -27,13 +27,23 @@ class DocCategoryController extends Controller
 	}
 
 	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Application|Factory|View
+	 */
+	public function index(): View|Factory|Application
+	{
+		return view('setup::doc-categories.index', ['docCategories' => DocCategory::all()]);
+	}
+
+	/**
 	 * Show the form for creating a new resource.
 	 *
 	 * @return Application|Factory|View
 	 */
 	public function create(): View|Factory|Application
 	{
-		return view('docs.doc-categories.create');
+		return view('setup::doc-categories.create');
 	}
 
 	/**
@@ -67,7 +77,7 @@ class DocCategoryController extends Controller
 	 */
 	public function show(DocCategory $docCategory): View|Factory|Application
 	{
-		return view('docs.doc-categories.show', ['docCategory' => $docCategory]);
+		return view('setup::doc-categories.show', ['docCategory' => $docCategory]);
 	}
 
 	/**
@@ -78,7 +88,7 @@ class DocCategoryController extends Controller
 	 */
 	public function edit(DocCategory $docCategpry): View|Factory|Application
 	{
-		return view('doc-categories.edit', ['docCategpry' => $docCategpry]);
+		return view('setup::doc-categories.edit', ['docCategpry' => $docCategpry]);
 	}
 
 	/**
@@ -102,7 +112,7 @@ class DocCategoryController extends Controller
 		];
 		$validated = $request->validate($rules);
 		$docCategpry->update($validated);
-		return view('doc-categories.show', ['docCategpry' => $docCategpry]);
+		return view('setup::doc-categories.show', ['docCategpry' => $docCategpry]);
 	}
 
 	/**
@@ -117,13 +127,4 @@ class DocCategoryController extends Controller
 		return $this->index();
 	}
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Application|Factory|View
-	 */
-	public function index(): View|Factory|Application
-	{
-		return view('docs.doc-categories.index', ['docCategories' => DocCategory::all()]);
-	}
 }

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->longText('message_body')->nullable();
             $table->string('file_path')->nullable();
             $table->foreignId('user_id')->nullable()->constrained();
-            $table->unsignedBigInteger('staff_id')->nullable()->default(NULL)->index();
+            $table->unsignedBigInteger('staff_member_id')->nullable()->default(NULL)->index();
             $table->unsignedBigInteger('recipient_id')->nullable()->default(NULL)->index();
             $table->string('recipient_type')->nullable()->default(NULL);
             $table->nullableTimestamps();

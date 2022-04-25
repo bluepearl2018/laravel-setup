@@ -34,14 +34,14 @@ Route::middleware(['web'])->group(function () {
 	Route::post('reset-password', [NewPasswordController::class, 'store'])
 		->name('password.update');
 
-	Route::get('goodbye-user', function () {
-		return view('frontend::layouts.master')->with('status', 'Goodbye');
+	Route::get('goodbye', function () {
+		return view('welcome')->with('status', 'Goodbye');
 	})->name('goodbye.user');
 	Route::get('goodbye-staff', function () {
-		return view('frontend::layouts.master')->with('status', 'Goodbye');
+		return view('welcome')->with('status', 'Goodbye');
 	})->name('goodbye.staff');
 	Route::get('goodbye-admin', function () {
-		return view('frontend::layouts.master')->with('status', 'Goodbye');
+		return view('welcome')->with('status', 'Goodbye');
 	})->name('goodbye.admin');
 });
 

@@ -1,9 +1,9 @@
-@extends('theme::setup.master')
+@extends('setup::layouts.master')
 @section('content')
-	<x-theme::h1>{{ $setupStep->name }}</x-theme::h1>
+	<x-theme-h1>{{ $setupStep->name }}</x-theme-h1>
 	<p class="mb-2 italic">{{ $setupStep->description }}</p>
 	@if($setupStep->console_action !== NULL)
-		<x-theme::h2>{{__('Console command') }}</x-theme::h2>
+		<x-theme-h2>{{__('Console command') }}</x-theme-h2>
 		<p>{{__('If a console action is available... you can use the console command or click the button to execute the action.')}}</p>
 		<form method="post" action="{{route('setup.laravel-setup-steps.run', $setupStep)}}">
 			@csrf
@@ -16,6 +16,6 @@
 			@endif
 		</form>
 	@else
-		<x-theme::h2>{{__('No console command available') }}</x-theme::h2>
+		<x-theme-h2>{{__('No console command available') }}</x-theme-h2>
 	@endif
 @endsection

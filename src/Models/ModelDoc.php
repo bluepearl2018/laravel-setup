@@ -4,6 +4,8 @@ namespace Eutranet\Setup\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use JetBrains\PhpStorm\ArrayShape;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class ModelDoc extends Model
 {
@@ -16,6 +18,7 @@ class ModelDoc extends Model
 		'namespace',
 		'description',
 		'comment',
+		'default_role',
 		'author_type',
 		'author_id'
 	];
@@ -28,6 +31,11 @@ class ModelDoc extends Model
 	public static function getNamespace(): string
 	{
 		return __NAMESPACE__;
+	}
+
+	public static function getClassLead(): string
+	{
+		return "The model documentation table is used to generate a lot of resources automatically.";
 	}
 
 	/**
@@ -53,5 +61,26 @@ class ModelDoc extends Model
 			'comment' => ['input', 'textarea', 'required', 'Lead', 'Enter the lead / intro'],
 			'body' => ['input', 'textarea', 'required', 'Body', 'Enter the body'],
 		];
+	}
+
+	/**
+	 * The "booted" method of the model.
+	 *
+	 * @return void
+	 */
+	protected static function booted()
+	{
+		if(Schema::hasTable('model_docs'))
+		{
+			ModelDoc::firstOrCreate([
+				'table_name' => (new ModelDoc())->getTable(),
+				'slug' => Str::slug((new ModelDoc())->getTable()),
+				'name' => Str::replace(Str::snake(Str::afterLast(__CLASS__, '\\')), '_', ' '),
+				'namespace' => __NAMESPACE__,
+				'description' => self::getClassLead(),
+				'comment' => NULL,
+				'default_role' => 'admin',
+			]);
+		}
 	}
 }
