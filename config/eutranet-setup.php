@@ -31,7 +31,6 @@ return [
     'tables' => [
         'agreements',
         'admins',
-        'corporates',
         'docs',
         'doc_categories',
         'emails',

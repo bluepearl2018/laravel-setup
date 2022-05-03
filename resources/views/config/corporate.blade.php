@@ -17,7 +17,8 @@
 				</div>
 			@endforeach
 		</div>
-		@if(class_exists('Eutranet\Corporate\Models\Corporate') && Eutranet\Corporate\Models\Corporate::find(1))
+		@if(class_exists('Eutranet\Corporate\Models\Corporate'))
+			@if(Eutranet\Corporate\Models\Corporate::find(1))
 			<x-theme-h2>{{__('Advanced DB Corporate data')}}</x-theme-h2>
 			<div class="mb-4">
 				@foreach(\Eutranet\Corporate\Models\Corporate::find(1)->getAttributes() as $key => $item)
@@ -31,6 +32,7 @@
 					</div>
 				@endforeach
 			</div>
+			@endif
 		@else
 			<p><i class="fa fa-exclamation-triangle text-red-500 mr-2"></i>{{__('Eutranet\'s Backend package is not installed.')}}</p>
 		@endif
