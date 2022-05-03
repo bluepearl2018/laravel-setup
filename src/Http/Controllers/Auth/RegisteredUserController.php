@@ -9,13 +9,13 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Storage;
 use Str;
+use Eutranet\Setup\Providers\SetupRouteServiceProvider;
 use function redirect;
 use function view;
 use function event;
@@ -82,7 +82,7 @@ class RegisteredUserController extends Controller
             return redirect(RouteServiceProvider::STAFF);
         } elseif (Auth::guard('admin')) {
             Flash::success('You have created a new user.');
-            return redirect(RouteServiceProvider::SETUP);
+            return redirect()->intended(SetupRouteServiceProvider::SETUP);
         }
         return redirect(RouteServiceProvider::MYSPACE);
     }

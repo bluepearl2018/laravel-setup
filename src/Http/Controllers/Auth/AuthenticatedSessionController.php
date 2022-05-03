@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Eutranet\Setup\Providers\SetupRouteServiceProvider;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -41,7 +42,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(RouteServiceProvider::BACKEND);
         } elseif (class_exists('Eutranet\Setup\Models\Admin') && Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended(RouteServiceProvider::SETUP);
+            return redirect()->intended(SetupRouteServiceProvider::SETUP);
         } elseif (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended(RouteServiceProvider::MYSPACE);
