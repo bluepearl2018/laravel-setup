@@ -50,7 +50,6 @@ return [
     [
         'Admin',
         'Agreement',
-        'Corporate',
         'Doc',
         'DocCategory',
         'Email',
