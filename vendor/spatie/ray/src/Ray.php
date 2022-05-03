@@ -734,7 +734,7 @@ class Ray
                 $meta['ray_package_version'] = InstalledVersions::getVersion('spatie/ray');
             }
         } catch (Exception $e) {
-            // In WordPress this entire laravel-init will be rewritten
+            // In WordPress this entire package will be rewritten
         }
 
         if (self::rateLimiter()->isMaxReached() ||

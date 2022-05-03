@@ -4,7 +4,7 @@
  *
  * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 namespace SebastianBergmann\CodeCoverage\Report;
@@ -89,7 +89,7 @@ final class Crap4j
                         $namespace = $class['namespace'];
                     }
 
-                    $methodNode->appendChild($document->createElement('laravel-init', $namespace));
+                    $methodNode->appendChild($document->createElement('package', $namespace));
                     $methodNode->appendChild($document->createElement('className', $className));
                     $methodNode->appendChild($document->createElement('methodName', $methodName));
                     $methodNode->appendChild($document->createElement('methodSignature', htmlspecialchars($method['signature'])));

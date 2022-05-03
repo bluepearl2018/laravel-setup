@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Config;
 
 class UpgradeForTeams extends Command
 {
-    protected $signature = 'permission:laravel-setup-teams';
+    protected $signature = 'permission:setup-teams';
 
     protected $description = 'Setup the teams feature by generating the associated migration.';
 
@@ -23,7 +23,7 @@ class UpgradeForTeams extends Command
         }
 
         $this->line('');
-        $this->info("The teams feature laravel-setup is going to add a migration and a model");
+        $this->info("The teams feature setup is going to add a migration and a model");
 
         $existingMigrations = $this->alreadyExistingMigrations();
 

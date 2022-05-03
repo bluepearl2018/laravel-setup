@@ -4,7 +4,7 @@
  *
  * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 namespace SebastianBergmann\CodeCoverage\Report;
@@ -103,39 +103,39 @@ final class Clover
                     ];
                 }
 
-                if (!empty($class['laravel-init']['namespace'])) {
-                    $namespace = $class['laravel-init']['namespace'];
+                if (!empty($class['package']['namespace'])) {
+                    $namespace = $class['package']['namespace'];
                 }
 
                 $xmlClass = $xmlDocument->createElement('class');
                 $xmlClass->setAttribute('name', $className);
                 $xmlClass->setAttribute('namespace', $namespace);
 
-                if (!empty($class['laravel-init']['fullPackage'])) {
+                if (!empty($class['package']['fullPackage'])) {
                     $xmlClass->setAttribute(
                         'fullPackage',
-                        $class['laravel-init']['fullPackage']
+                        $class['package']['fullPackage']
                     );
                 }
 
-                if (!empty($class['laravel-init']['category'])) {
+                if (!empty($class['package']['category'])) {
                     $xmlClass->setAttribute(
                         'category',
-                        $class['laravel-init']['category']
+                        $class['package']['category']
                     );
                 }
 
-                if (!empty($class['laravel-init']['laravel-init'])) {
+                if (!empty($class['package']['package'])) {
                     $xmlClass->setAttribute(
-                        'laravel-init',
-                        $class['laravel-init']['laravel-init']
+                        'package',
+                        $class['package']['package']
                     );
                 }
 
-                if (!empty($class['laravel-init']['subpackage'])) {
+                if (!empty($class['package']['subpackage'])) {
                     $xmlClass->setAttribute(
                         'subpackage',
-                        $class['laravel-init']['subpackage']
+                        $class['package']['subpackage']
                     );
                 }
 
@@ -212,7 +212,7 @@ final class Clover
             } else {
                 if (!isset($packages[$namespace])) {
                     $packages[$namespace] = $xmlDocument->createElement(
-                        'laravel-init'
+                        'package'
                     );
 
                     $packages[$namespace]->setAttribute('name', $namespace);

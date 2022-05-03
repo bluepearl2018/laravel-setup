@@ -4,7 +4,7 @@
  *
  * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 namespace SebastianBergmann\CodeCoverage\Report;
@@ -82,7 +82,7 @@ final class Cobertura
                 continue;
             }
 
-            $packageElement    = $document->createElement('laravel-init');
+            $packageElement    = $document->createElement('package');
             $packageComplexity = 0;
             $packageName       = $name ?? '';
 
@@ -114,8 +114,8 @@ final class Cobertura
                 $complexity += $class['ccn'];
                 $packageComplexity += $class['ccn'];
 
-                if (!empty($class['laravel-init']['namespace'])) {
-                    $className = $class['laravel-init']['namespace'] . '\\' . $className;
+                if (!empty($class['package']['namespace'])) {
+                    $className = $class['package']['namespace'] . '\\' . $className;
                 }
 
                 $linesValid   = $class['executableLines'];

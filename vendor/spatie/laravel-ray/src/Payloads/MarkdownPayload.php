@@ -55,7 +55,7 @@ class MarkdownPayload extends Payload
     protected function processCodeBlocks($html): string
     {
         // format code blocks background color, padding, and display width; the background
-        // color changes based on light or dark app laravel-theme.
+        // color changes based on light or dark app theme.
         return str_replace('<pre><code', '<pre class="w-100 bg-gray-200 dark:bg-gray-800 p-5"><code', $html);
     }
 

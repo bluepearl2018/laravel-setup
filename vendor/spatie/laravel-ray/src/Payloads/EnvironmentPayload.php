@@ -78,7 +78,7 @@ class EnvironmentPayload extends Payload
 
         // ip addresses
         if (preg_match('~(\d{1,3}\.){3}\d{1,3}~', $value) === 1) {
-            return "<div href=\"{$value}\" class=\"text-yellow-700\">{$value}</div>";
+            return "<div href=\"{$value}\" class=\"text-indigo-700\">{$value}</div>";
         }
 
         return $value;

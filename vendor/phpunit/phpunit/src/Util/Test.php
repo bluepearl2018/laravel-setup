@@ -4,7 +4,7 @@
  *
  * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 namespace PHPUnit\Util;
@@ -37,6 +37,7 @@ use function strpos;
 use function strtolower;
 use function trim;
 use function version_compare;
+use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\CodeCoverageException;
 use PHPUnit\Framework\ExecutionOrderDependency;
 use PHPUnit\Framework\InvalidCoversTargetException;
@@ -525,7 +526,15 @@ final class Test
             self::$hookMethods[$className] = self::emptyHookMethodsArray();
 
             try {
-                foreach ((new Reflection)->methodsInTestClass(new ReflectionClass($className)) as $method) {
+                foreach ((new ReflectionClass($className))->getMethods() as $method) {
+                    if ($method->getDeclaringClass()->getName() === Assert::class) {
+                        continue;
+                    }
+
+                    if ($method->getDeclaringClass()->getName() === TestCase::class) {
+                        continue;
+                    }
+
                     $docBlock = Registry::getInstance()->forMethod($className, $method->getName());
 
                     if ($method->isStatic()) {
