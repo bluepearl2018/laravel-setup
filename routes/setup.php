@@ -20,7 +20,7 @@ Route::middleware(['web', 'guest:admin'])->prefix('setup')->name('setup.')->grou
 });
 
 Route::middleware(['web', 'auth:admin'])->prefix('setup')->name('setup.')->group(function () {
-    Route::redirect('/', 'dashboard')->name('dashboard');
+    Route::redirect('/', 'dashboard');
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('installation', [SetupProcessController::class, 'index'])->name('installation');
     Route::get('config-corporate', [SetupProcessController::class, 'configCorporate'])->name('config-corporate');
