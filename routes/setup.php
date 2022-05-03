@@ -13,6 +13,7 @@ use Eutranet\Setup\Http\Controllers\Auth\AuthenticatedSessionController;
 use Eutranet\Setup\Http\Controllers\AgreementController;
 use Eutranet\Setup\Http\Controllers\UserController;
 use Eutranet\Setup\Http\Controllers\StaffMemberController;
+use Eutranet\Setup\Http\Controllers\RoleHasPermissionController;
 
 Route::middleware(['web', 'guest:admin'])->prefix('setup')->name('setup.')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -89,9 +90,9 @@ Route::middleware(['web', 'auth:admin'])->prefix('setup')->name('setup.')->group
      * All documents and document categories..
      */
     Route::resource('agreements', AgreementController::class)->names('agreements');
-    Route::resource('emails', EmailController::class)->names('emails');
+    /*Route::resource('emails', EmailController::class)->names('emails');
     Route::resource('general-terms', GeneralTermController::class)->names('general-terms');
-    Route::resource('guards', GuardController::class)->names('guards');
+    Route::resource('guards', GuardController::class)->names('guards');*/
 
     /**
      * ACCOUNTS, ROLES AND PERMISSIONS
@@ -126,7 +127,7 @@ Route::middleware(['web', 'auth:admin'])->prefix('setup')->name('setup.')->group
      * Administrators and staff members are not "users", but staff or admins.
      */
 
-    if (Schema::hasTable('messages')) {
-        Route::get('admins/{admin}/messages/history', [MessageController::class, 'history'])->name('admins.messages.history');
-    }
+//    if (Schema::hasTable('messages')) {
+//        Route::get('admins/{admin}/messages/history', [MessageController::class, 'history'])->name('admins.messages.history');
+//    }
 });
