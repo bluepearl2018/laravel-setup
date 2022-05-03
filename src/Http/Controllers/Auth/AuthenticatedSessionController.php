@@ -44,7 +44,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(RouteServiceProvider::SETUP);
         } elseif (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended(RouteServiceProvider::HOME);
+            return redirect()->intended(RouteServiceProvider::MYSPACE);
         }
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',

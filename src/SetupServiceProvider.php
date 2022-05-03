@@ -12,6 +12,7 @@ use Eutranet\Setup\View\Components\Logo;
 use Eutranet\Setup\View\Composers\SetupConfigComposer;
 use Eutranet\Setup\Providers\SetupMenuServiceProvider;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Eutranet\Setup\Providers\SetupRouteServiceProvider;
 
 class SetupServiceProvider extends PackageServiceProvider
 {
@@ -64,6 +65,7 @@ class SetupServiceProvider extends PackageServiceProvider
         parent::register();
         // ... other things
         //		$this->registerRoutes();
+        $this->app->register(SetupRouteServiceProvider::class);
         $this->app->register(SetupMenuServiceProvider::class);
         $this->loadMigrationsFrom(app_path('Eutranet/Setup/database/migrations'));
     }
