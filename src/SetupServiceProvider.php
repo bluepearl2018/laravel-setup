@@ -11,7 +11,7 @@ use Eutranet\Setup\Http\Middleware\SetupMigratedMiddleware;
 use Eutranet\Setup\View\Components\Logo;
 use Eutranet\Setup\View\Composers\SetupConfigComposer;
 use Eutranet\Setup\Providers\SetupMenuServiceProvider;
-use Eutranet\Setup\View\Composers\SetupMenuComposer;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
 class SetupServiceProvider extends PackageServiceProvider
 {
@@ -19,7 +19,7 @@ class SetupServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-setup')
-            ->hasConfigFile(['eutranet-setup', 'corporate', 'permission']) // php artisan vendor:publish --tag=your-laravel-init-name-config
+            ->hasConfigFile(['eutranet-setup', 'corporate', 'auth', 'permission']) // php artisan vendor:publish --tag=your-laravel-init-name-config
             ->hasRoutes(['config', 'auth', 'web', 'back', 'setup'])
             ->hasViews('setup') // ->hasViews('custom-view-namespace::myView.subview');
             ->hasMigration('add_description_to_permission_tables')
@@ -45,6 +45,9 @@ class SetupServiceProvider extends PackageServiceProvider
         // ->hasMigration('create_package_tables');
     }
 
+    /**
+     * @throws BindingResolutionException
+     */
     public function boot()
     {
         parent::boot();
