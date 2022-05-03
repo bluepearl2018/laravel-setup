@@ -9,16 +9,14 @@ use Eutranet\Setup\Repository\Interface\EutranetSetupInterface;
 
 class ModelDocRepository extends BaseRepository implements EutranetSetupInterface
 {
+    /**
+     * Gneral termr Repository constructor..
+     *
+     * @param ModelDoc $model
+     */
 
-	/**
-	 * Gneral termr Repository constructor..
-	 *
-	 * @param ModelDoc $model
-	 */
-
-	#[Pure] public function __construct(ModelDoc $model)
-	{
-		parent::__construct($model);
-	}
-
+    #[Pure] public function __construct(ModelDoc $model)
+    {
+        parent::__construct($model);
+    }
 }

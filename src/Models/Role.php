@@ -5,6 +5,7 @@ namespace Eutranet\Setup\Models;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * The Role class is an extension of the original
@@ -14,76 +15,86 @@ use Illuminate\Support\Str;
  */
 class Role extends \Spatie\Permission\Models\Role
 {
-	use HasTranslations;
+    use HasTranslations;
 
-	/**
-	 * @var string
-	 */
-	protected $table = 'roles';
-	/**
-	 * @var string[]
-	 */
-	protected $fillable = ['name', 'guard_name', 'description'];
+    /**
+     * @var string
+     */
+    protected $table = 'roles';
+    /**
+     * @var string[]
+     */
+    protected $fillable = ['name', 'guard_name', 'description'];
 
-	/**
-	 * @var array|string[]
-	 */
-	protected array $translatable = ['description'];
+    /**
+     * @var array|string[]
+     */
+    protected array $translatable = ['description'];
 
-	/**
-	 * This static function is essential for the documentation service provider
-	 * The namespace is saved into doc_models table
-	 * @return string
-	 */
-	public static function getNamespace(): string
-	{
-		return __NAMESPACE__;
-	}
+    #[ArrayShape(['name' => "string[]", 'guard_name' => "string[]", 'description' => "string[]"])]
+    public static function getFields(): array
+    {
+        // field, type, required, placeholder, tip, model
+        return [
+            'name' => ['input', 'text', 'required', 'Name', 'Enter the name'],
+            'guard_name' => ['select', 'list', 'required', 'Guard name', 'Select the guard name', 'Eutranet\Setup\Models\Guard'],
+            'description' => ['input', 'textarea', 'optional', 'Description', 'Enter a description'],
+        ];
+    }
 
-	/**
-	 * @return string
-	 */
-	public static function getClassLead(): string
-	{
-		return "The roles can have permissions.";
-	}
+    /**
+     * This static function is essential for the documentation service provider
+     * The namespace is saved into doc_models table
+     * @return string
+     */
+    public static function getNamespace(): string
+    {
+        return __NAMESPACE__;
+    }
 
-	/**
-	 * Get the route key for the model.
-	 *
-	 * @return string
-	 */
-	public function getRouteKeyName(): string
-	{
-		return 'name';
-	}
+    /**
+     * @return string
+     */
+    public static function getClassLead(): string
+    {
+        return "The roles can have permissions.";
+    }
 
-	/**
-	 * @return void
-	 */
-	public static function boot()
-	{
-		parent::boot();
-	}
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'name';
+    }
 
-	/**
-	 * The "booted" method of the model.
-	 *
-	 * @return void
-	 */
-	protected static function booted()
-	{
-		if(Schema::hasTable('model_docs'))
-		{
-			ModelDoc::firstOrCreate([
-				'table_name' => (new Role())->getTable(),
-				'slug' => Str::slug((new Role())->getTable()),
-				'name' => Str::replace(Str::snake(Str::afterLast(__CLASS__, '\\')), '_', ' '),
-				'namespace' => __NAMESPACE__,
-				'description' => self::getClassLead(),
-				'comment' => NULL,
-				'default_role' => 'admin'
-			]);
-		}
-	}
+    /**
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        if (Schema::hasTable('model_docs')) {
+            ModelDoc::firstOrCreate([
+                'table_name' => (new Role())->getTable(),
+                'slug' => Str::slug((new Role())->getTable()),
+                'name' => Str::replace(Str::snake(Str::afterLast(__CLASS__, '\\')), '_', ' '),
+                'namespace' => __NAMESPACE__,
+                'description' => self::getClassLead(),
+                'comment' => null,
+                'default_role' => 'admin'
+            ]);
+        }
+    }
 }

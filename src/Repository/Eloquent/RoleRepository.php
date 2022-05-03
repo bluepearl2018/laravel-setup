@@ -9,16 +9,14 @@ use Eutranet\Setup\Repository\Interface\EutranetSetupInterface;
 
 class RoleRepository extends BaseRepository implements EutranetSetupInterface
 {
+    /**
+     * Role Repository constructor.
+     *
+     * @param Role $model
+     */
 
-	/**
-	 * Role Repository constructor.
-	 *
-	 * @param Role $model
-	 */
-
-	#[Pure] public function __construct(Role $model)
-	{
-		parent::__construct($model);
-	}
-
+    #[Pure] public function __construct(Role $model)
+    {
+        parent::__construct($model);
+    }
 }

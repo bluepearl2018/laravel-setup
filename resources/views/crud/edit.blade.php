@@ -1,6 +1,6 @@
 @extends('setup::layouts.master')
 @section('content')
-	<div class="sm:flex sm:items-center" xmlns:x-theme="http://www.w3.org/1999/html">
+	<div class="sm:flex sm:items-center">
 		<div class="sm:flex-auto">
 			<x-theme-h1>
 				{{ __('Edit ') . __(Str::replace('_', ' ', Str::title(Str::snake($class)))) }} ({{ __('Details') }})

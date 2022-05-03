@@ -11,16 +11,15 @@ use Eutranet\Setup\Models\Admin;
  */
 trait HasArticles
 {
-	/**
-	 * Returns articles whose authors is an Admin, a staff or user...
-	 * @return MorphMany|null
-	 */
-	public function articles(): MorphMany|null
-	{
-		if(class_exists('Eutranet\Frontend\Models\Article'))
-		{
-			return $this->morphMany(Article::class, 'author');
-		}
-		return NULL;
-	}
+    /**
+     * Returns articles whose authors is an Admin, a staff or user...
+     * @return MorphMany|null
+     */
+    public function articles(): MorphMany|null
+    {
+        if (class_exists('Eutranet\Frontend\Models\Article')) {
+            return $this->morphMany(Article::class, 'author');
+        }
+        return null;
+    }
 }

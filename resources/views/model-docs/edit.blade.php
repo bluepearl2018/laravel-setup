@@ -11,9 +11,9 @@
 			  method="post">
 			@method('PUT')
 			@csrf
-			<x-forms.input-textarea columnName="description"
+			<x-theme-form-input-textarea columnName="description"
 									:old="$modelDoc->description"
-									specs="array('input', 'textarea', 'required', 'Description', 'Description')"></x-forms.input-textarea>
+									specs="array('input', 'textarea', 'required', 'Description', 'Description')"></x-theme-form-input-textarea>
 			<x-theme-form-update-buttons form="edit-model-doc-description-frm"></x-theme-form-update-buttons>
 		</form>
 		<x-theme-h2 class="mt-4">{{ __('Comment') }}</x-theme-h2>
@@ -21,9 +21,9 @@
 		<form id="edit-model-doc-comment-frm" action="{{route('setup.model-docs.update', $modelDoc)}}" method="post">
 			@method('PUT')
 			@csrf
-			<x-forms.input-textarea columnName="comment"
+			<x-theme-form-input-textarea columnName="comment"
 									:old="$modelDoc->comment"
-									specs="array('input', 'textarea', 'required', 'Comment', 'Comment')"></x-forms.input-textarea>
+									specs="array('input', 'textarea', 'required', 'Comment', 'Comment')"></x-theme-form-input-textarea>
 			<x-theme-form-update-buttons form="edit-model-doc-comment-frm"></x-theme-form-update-buttons>
 		</form>
 	</div>

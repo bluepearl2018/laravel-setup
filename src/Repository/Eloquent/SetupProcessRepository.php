@@ -13,45 +13,44 @@ use Eutranet\Setup\Repository\Interface\EutranetSetupInterface;
  */
 class SetupProcessRepository extends BaseRepository implements EutranetSetupInterface
 {
+    /**
+     * Setup Process Repository constructor.
+     *
+     * @param SetupProcess $model
+     */
 
-	/**
-	 * Setup Process Repository constructor.
-	 *
-	 * @param SetupProcess $model
-	 */
+    #[Pure] public function __construct(SetupProcess $model)
+    {
+        parent::__construct($model);
+    }
 
-	#[Pure] public function __construct(SetupProcess $model)
-	{
-		parent::__construct($model);
-	}
+    /**
+     * ---------------------------------------------------
+     * CHECKS
+     * ---------------------------------------------------
+     */
 
-	/**
-	 * ---------------------------------------------------
-	 * CHECKS
-	 * ---------------------------------------------------
-	 */
+    /**
+     * @param $model
+     * @return bool
+     */
+    public function isComplete($model): bool
+    {
+        return $this->model->is_complete === true;
+    }
 
-	/**
-	 * @param $model
-	 * @return bool
-	 */
-	public function isComplete($model): bool
-	{
-		return $this->model->is_complete === true;
-	}
+    /**
+     * ---------------------------------------------------
+     * ACTIONS
+     * ---------------------------------------------------
+     */
 
-	/**
-	 * ---------------------------------------------------
-	 * ACTIONS
-	 * ---------------------------------------------------
-	 */
-
-	/**
-	 * @param $model
-	 * @return void
-	 */
-	public function setComplete($model)
-	{
-		$this->model->update(['is_complete' => true]);
-	}
+    /**
+     * @param $model
+     * @return void
+     */
+    public function setComplete($model)
+    {
+        $this->model->update(['is_complete' => true]);
+    }
 }

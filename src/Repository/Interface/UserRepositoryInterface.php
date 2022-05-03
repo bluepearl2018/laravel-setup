@@ -10,15 +10,15 @@ use Illuminate\Support\Collection;
  */
 interface UserRepositoryInterface
 {
-	public function all(): Collection;
+    public function all(): Collection;
 
-	public function getAllUsers(): Collection;
+    public function getAllUsers(): Collection;
 
-	public function getByTaxId($userTaxId);
+    public function getByTaxId($userTaxId);
 
-	public function getByEmail($userEmail);
+    public function getByEmail($userEmail);
 
-	public function getByPhone($userPhone);
+    public function getByPhone($userPhone);
 
-	public function getByDateOfBirth($userDateOfBirth);
+    public function getByDateOfBirth($userDateOfBirth);
 }

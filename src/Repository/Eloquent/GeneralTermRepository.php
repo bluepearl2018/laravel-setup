@@ -10,16 +10,14 @@ use Eutranet\Setup\Repository\Interface\EutranetSetupInterface;
 
 class GeneralTermRepository extends BaseRepository implements EutranetSetupInterface
 {
+    /**
+     * Gneral termr Repository constructor..
+     *
+     * @param GeneralTerm $model
+     */
 
-	/**
-	 * Gneral termr Repository constructor..
-	 *
-	 * @param GeneralTerm $model
-	 */
-
-	#[Pure] public function __construct(GeneralTerm $model)
-	{
-		parent::__construct($model);
-	}
-
+    #[Pure] public function __construct(GeneralTerm $model)
+    {
+        parent::__construct($model);
+    }
 }

@@ -11,9 +11,9 @@ use Eutranet\Setup\Repository\EloquentRepositoryInterface;
  */
 interface EutranetSetupInterface extends EloquentRepositoryInterface
 {
-	/**
-	 * @param $id
-	 * @return Model|null
-	 */
-	public function find($id): ?Model;
+    /**
+     * @param $id
+     * @return Model|null
+     */
+    public function find($id): ?Model;
 }

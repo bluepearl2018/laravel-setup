@@ -8,16 +8,16 @@ use DB;
 
 class EmailSeeder extends Seeder
 {
-	/**
-	 * Run the database seeds.
-	 *
-	 * @return void
-	 */
-	public function run()
-	{
-		// Seeds with dummy emails
-		if (Schema::hasTable('emails') && DB::table('emails')->get()->count() < 1) {
-			@include('emails.php');
-		}
-	}
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        // Seeds with dummy emails
+        if (Schema::hasTable('emails') && DB::table('emails')->get()->count() < 1) {
+            @include('emails.php');
+        }
+    }
 }

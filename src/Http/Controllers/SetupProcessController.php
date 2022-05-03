@@ -16,32 +16,33 @@ use Eutranet\Setup\Repository\Eloquent\SetupStepRepository;
  */
 class SetupProcessController extends Controller
 {
-	/**
-	 *
-	 */
-	protected SetupStepRepository $setuStepRepo;
-	/**
-	 *
-	 */
-	public function __construct(SetupStepRepository $setupStepRepository)
-	{
-		$this->middleware(['auth:admin']);
-		$this->setupStepRepo = $setupStepRepository;
-	}
+    /**
+     *
+     */
+    protected SetupStepRepository $setuStepRepo;
+    /**
+     *
+     */
+    public function __construct(SetupStepRepository $setupStepRepository)
+    {
+        $this->middleware(['auth:admin']);
+        $this->setupStepRepo = $setupStepRepository;
+    }
 
-	/**
-	 * @return Application|Factory|View
-	 */
-	public function index()
-	{
-		return view('setup::checks.index');
-	}
+    /**
+     * @return Application|Factory|View
+     */
+    public function index(): Factory|View|Application
+    {
+        return view('setup::checks.index');
+    }
 
-	/**
-	 * @return Application|Factory|View
-	 */
-	public function configCorporate(): Application|Factory|View
-	{
-		return view('setup::config.corporate');
-	}
+    /**
+     * @return Application|Factory|View
+     */
+    public function configCorporate(): Application|Factory|View
+    {
+        $corporate = config('corporate');
+        return view('setup::config.corporate', compact('corporate'));
+    }
 }

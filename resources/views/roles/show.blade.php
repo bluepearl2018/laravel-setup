@@ -1,10 +1,13 @@
 @extends('setup::layouts.master')
 @section('content')
-	<x-theme-h1>{{ $role['description'] }}
+	<x-theme-h1>
+		{{ Str::title(Str::replace('-', ' ', $role->name)) }}
 		({{ \Eutranet\Setup\Models\Guard::where('slug', $role->guard_name)->get()->first()?->name }})
 	</x-theme-h1>
-	<p class="mb-2 italic">{{__('About this role and associated permissions.')}}</p>
-	<x-theme-h2>{!! __('Permissions assigned to <strong>'. $role->description . '</strong>.')  !!}</x-theme-h2>
+	<div class="mb-2 italic">
+	{!! $role['description'] !!}
+	</div>
+	<x-theme-h2>{!! __('Permissions assigned to <strong>'. $role->name . '</strong>.')  !!}</x-theme-h2>
 	<p class="italic">{{__('Permissions can be modified after installations... However, this is not recommended as it will involve development tasks. A better solution would be to create a new role. List, Create, Read, Update, Delete, Translate.')}}</p>
 
 	<form id="sync-role-permissions-frm" action="{{route('setup.roles.sync-permission', [$role])}}"

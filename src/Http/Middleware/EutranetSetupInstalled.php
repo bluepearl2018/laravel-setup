@@ -8,12 +8,12 @@ use Flash;
 
 class EutranetSetupInstalled
 {
-	public function handle($request, Closure $next)
-	{
-		if (!Schema::hasTable('countries')) {
-			Flash::error('Please install Eutranet setup package.');
-			return redirect()->route('install');
-		}
-		return $next($request);
-	}
+    public function handle($request, Closure $next)
+    {
+        if (!Schema::hasTable('countries')) {
+            Flash::error('Please install Eutranet setup package.');
+            return redirect()->route('install');
+        }
+        return $next($request);
+    }
 }

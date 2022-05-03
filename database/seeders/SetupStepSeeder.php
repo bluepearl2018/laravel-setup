@@ -6,13 +6,13 @@ use Illuminate\Database\Seeder;
 
 class SetupStepSeeder extends Seeder
 {
-	/**
-	 * Run the database seeds.
-	 *
-	 * @return void
-	 */
-	public function run()
-	{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
 
 //		$setupSteps = [
 //			// Fresh install
@@ -230,5 +230,5 @@ class SetupStepSeeder extends Seeder
 //		DB::table('setup_steps')->insert(
 //			$setupSteps
 //		);
-	}
+    }
 }

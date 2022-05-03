@@ -10,27 +10,27 @@ use Illuminate\Contracts\View\View;
 
 class Logo extends Component
 {
-	private string $logoRoutePath;
+    private string $logoRoutePath;
 
-	/**
-	 * Create a new component instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		$this->logoRoutePath = url('/setup/dashboard');
-	}
+    /**
+     * Create a new component instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->logoRoutePath = url('/setup/dashboard');
+    }
 
-	/**
-	 * Get the view / contents that represent the component.
-	 *
-	 * @return Application|Factory|View
-	 */
-	public function render(): View|Factory|Application
-	{
-		return view('setup::components.logo', [
-			'logoRoutePath' => $this->logoRoutePath
-		]);
-	}
+    /**
+     * Get the view / contents that represent the component.
+     *
+     * @return Application|Factory|View
+     */
+    public function render(): View|Factory|Application
+    {
+        return view('setup::components.logo', [
+            'logoRoutePath' => $this->logoRoutePath
+        ]);
+    }
 }

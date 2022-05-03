@@ -11,26 +11,25 @@ use Eutranet\Setup\Repository\Interface\EutranetSetupInterface;
 
 class PermissionRepository extends BaseRepository implements EutranetSetupInterface
 {
+    /**
+     * Permission Repository constructor.
+     *
+     * @param Permission $model
+     */
 
-	/**
-	 * Permission Repository constructor.
-	 *
-	 * @param Permission $model
-	 */
+    #[Pure] public function __construct(Permission $model)
+    {
+        parent::__construct($model);
+    }
 
-	#[Pure] public function __construct(Permission $model)
-	{
-		parent::__construct($model);
-	}
-
-	/**
-	 * Scope a query to only include popular users.
-	 *
-	 * @param $guardName
-	 * @return Collection
-	 */
-	public function getByGuardName($guardName): Collection
-	{
-		return $this->model->where('guard_name', $guardName)->get();
-	}
+    /**
+     * Scope a query to only include popular users.
+     *
+     * @param $guardName
+     * @return Collection
+     */
+    public function getByGuardName($guardName): Collection
+    {
+        return $this->model->where('guard_name', $guardName)->get();
+    }
 }

@@ -84,7 +84,7 @@
 					<a href="{{ route('setup.be.config') }}" class="bg-red-500 text-gray-100 p-1 px-2 font-bold">Overview</a>
 				@endif
 				@isset($modelDocs)
-					@forelse($modelDocs->where('namespace', 'Eutranet\Be\Models') as $modelDoc)
+					@forelse($modelDocs->where('namespace', 'Eutranet\Corporate\Models') as $modelDoc)
 						<a href="{{ route('setup.model-docs.show', $modelDoc) }}">{{ $modelDoc->name }}</a>
 						@if(!$loop->last) &middot; @endif
 					@empty
@@ -107,7 +107,7 @@
 					<a href="{{ route('setup.frontend.config') }}" class="bg-red-500 text-gray-100 p-1 px-2 font-bold">Overview</a>
 				@endif
 				@isset($modelDocs)
-					@forelse($modelDocs->where('namespace', 'Eutranet\Be\Models') as $modelDoc)
+					@forelse($modelDocs->where('namespace', 'Eutranet\Corporate\Models') as $modelDoc)
 						<a href="{{ route('setup.model-docs.show', $modelDoc) }}">{{ $modelDoc->name }}</a>
 						@if(!$loop->last) &middot; @endif
 					@empty
@@ -130,7 +130,7 @@
 					<a href="{{ route('setup.my-space.config') }}" class="bg-red-500 text-gray-100 p-1 px-2 font-bold">Overview</a>
 				@endif
 				@isset($modelDocs)
-					@forelse($modelDocs->where('namespace', 'Eutranet\Be\Models') as $modelDoc)
+					@forelse($modelDocs->where('namespace', 'Eutranet\Corporate\Models') as $modelDoc)
 						<a href="{{ route('setup.model-docs.show', $modelDoc) }}">{{ $modelDoc->name }}</a>
 						@if(!$loop->last) &middot; @endif
 					@empty

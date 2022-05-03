@@ -19,7 +19,7 @@
             <td></td>
         </tr>
         </thead>
-        @foreach(\App\Models\Commons\ExpenseCategory::orderBy('parent_id', 'ASC')->get() as $entry)
+        @foreach(\Eutranet\FlorbelaCommons\Models\ExpenseCategory::orderBy('parent_id', 'ASC')->get() as $entry)
             <tr>
                 <td>
                     {{ $entry->parent->name ?? '-' }}

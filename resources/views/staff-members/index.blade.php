@@ -16,5 +16,12 @@
 				</td>
 			</tr>
 		@endforeach
+		<tfoot>
+			<tr>
+				<td colspan="4">
+					{{$staffMembers->links()}}
+				</td>
+			</tr>
+		</tfoot>
 	</table>
 @endsection

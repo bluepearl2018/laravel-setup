@@ -10,18 +10,18 @@ use Eutranet\Setup\Repository\Eloquent\GeneralTermRepository;
  */
 class GeneralTermController extends Controller
 {
-	private GeneralTermRepository $generalTermRepo;
+    private GeneralTermRepository $generalTermRepo;
 
-	public function __construct(GeneralTermRepository $generalTermRepository)
-	{
-		$this->middleware(['role:admin']);
-		$this->generalTermRepo = $generalTermRepository;
-	}
+    public function __construct(GeneralTermRepository $generalTermRepository)
+    {
+        $this->middleware(['role:admin']);
+        $this->generalTermRepo = $generalTermRepository;
+    }
 
-	public function index()
-	{
-		return view('setup::corporates.index', [
-			'generalTerms' => $this->generalTermRepo->all()
-		]);
-	}
+    public function index()
+    {
+        return view('setup::corporates.index', [
+            'generalTerms' => $this->generalTermRepo->all()
+        ]);
+    }
 }

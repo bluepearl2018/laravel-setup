@@ -14,16 +14,16 @@ use function view;
 
 class EmailVerificationPromptController extends Controller
 {
-	/**
-	 * Display the email verification prompt.
-	 *
-	 * @param Request $request
-	 * @return View|Factory|Application|RedirectResponse
-	 */
-	public function __invoke(Request $request): View|Factory|Application|RedirectResponse
-	{
-		return $request->user()->hasVerifiedEmail()
-			? redirect()->intended(RouteServiceProvider::HOME)
-			: view('theme::auth.verify-email');
-	}
+    /**
+     * Display the email verification prompt.
+     *
+     * @param Request $request
+     * @return View|Factory|Application|RedirectResponse
+     */
+    public function __invoke(Request $request): View|Factory|Application|RedirectResponse
+    {
+        return $request->user()->hasVerifiedEmail()
+            ? redirect()->intended(RouteServiceProvider::HOME)
+            : view('theme::auth.verify-email');
+    }
 }

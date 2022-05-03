@@ -2,7 +2,6 @@
 
 namespace Eutranet\Setup\Repository;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -11,17 +10,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 interface EloquentRepositoryInterface
 {
+    /**
+     * @param $id
+     * @return Model|null
+     */
+    public function find($id): ?Model;
 
-	/**
-	 * @param $id
-	 * @return Model|null
-	 */
-	public function find($id): ?Model;
-
-	/**
-	 * @param array $attributes
-	 * @return Model
-	 */
-	public function create(array $attributes): Model;
-
+    /**
+     * @param array $attributes
+     * @return Model
+     */
+    public function create(array $attributes): Model;
 }

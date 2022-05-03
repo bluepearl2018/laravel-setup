@@ -8,21 +8,20 @@ use Eutranet\Setup\Models\Agreement;
 
 class AgreementSeeder extends Seeder
 {
-	/**
-	 * Run the database seeds.
-	 *
-	 * @return void
-	 */
-	public function run()
-	{
-
-		$demoArray = array(
-			array(
-				'description' => '{"en":"Base agreement description", "fr":"Description contrat de base"}',
-				'name' => '{"en":"Service agreement", "fr":"Contrat de prestation de services", "pt":"CONTRATO PRESTAÇÃO DE SERVIÇOS"}',
-				'lead' => '{"en":"B2C services", "fr":"Services aux particuliers", "ptr":"Segmento particulares" }',
-				'sections' => '{"user-info","financial-info", "service", "corporate-general-terms"}', // To get partial blades...
-				'general_terms' => '{"en":"General terms of service", "fr":"Conditions générales de service", "pt":"CLAÚSULAS CONTRATUAIS
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $demoArray = array(
+            array(
+                'description' => '{"en":"Base agreement description", "fr":"Description contrat de base"}',
+                'name' => '{"en":"Service agreement", "fr":"Contrat de prestation de services", "pt":"CONTRATO PRESTAÇÃO DE SERVIÇOS"}',
+                'lead' => '{"en":"B2C services", "fr":"Services aux particuliers", "ptr":"Segmento particulares" }',
+                'sections' => '{"user-info","financial-info", "service", "corporate-general-terms"}', // To get partial blades...
+                'general_terms' => '{"en":"General terms of service", "fr":"Conditions générales de service", "pt":"CLAÚSULAS CONTRATUAIS
 A Florbela Oliveira - Financial Advisors Lda existe com um Propósito, aconselhar as Famílias em matéria de endividamento, procedendo à elaboração do Diagnostico Financeiro do Orçamento Familiar, com vista à redução dos encargos e despesas mensais, elaboração de planos de pagamentos e renegociação com credores, no sentido da redução das responsabilidades e alargamento do prazo.
 1)A Florbela Oliveira - Financial Advisors Lda é uma empresa de origem Portuguesa que se dedica à prestação de serviços de consultoria financeira vocacionada para aconselhar as Famílias em matéria de Endividamento.
 2)A Florbela Oliveira - Financial Advisors Lda identificado na frente do presente contrato não garante a concretização do plano de pagamentos, estando este dependente da aprovação dos credores.
@@ -50,13 +49,13 @@ vi) Apresentação da proposta de renegociação junto dos Credores, tendo em co
 Neste caso, a Florbela Oliveira - Financial Advisors Lda informará o cliente da necessidade de contratar um técnico capacitado e habilitado para o efeito (advogado/solicitador) e não interferirá, em qualquer circunstância, com a escolha livre e directa do mesmo pelo cliente comprometendo-se sim, a colaborar dentro das suas competências, e se necessário, com o advogado ou solicitador indicado pelo cliente tendo em vista obter a melhor resolução para os seus problemas.
 A Florbela Oliveira - Financial Advisors Lda enquanto consultora financeira, poderá elaborar planos de pagamentos e outra informação de índole financeira a apresentar a credores ou a terceiras entidades não exercendo ou praticando actos jurídicos.
 É assegurado ao Cliente, nos termos legais, o acesso, correcção, aditamento ou supressão das informações que lhe dizem respeito, mediante contacto dirigido por escrito à Florbela Oliveira - Financial Advisors Lda identificado na frente do presente contrato."}',
-				'file_path' => NULL,
-			),
-		);
-		if (DB::table('agreements')->get()->count() < 1) {
-			DB::table('agreements')->insert(
-				$demoArray
-			);
-		}
-	}
+                'file_path' => null,
+            ),
+        );
+        if (DB::table('agreements')->get()->count() < 1) {
+            DB::table('agreements')->insert(
+                $demoArray
+            );
+        }
+    }
 }
