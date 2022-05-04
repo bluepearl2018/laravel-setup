@@ -3,7 +3,6 @@
 namespace Eutranet\Setup\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +11,7 @@ use Illuminate\View\View;
 use function __;
 use function redirect;
 use function view;
+use Eutranet\Setup\Providers\SetupRouteServiceProvider;
 
 class ConfirmablePasswordController extends Controller
 {
@@ -45,6 +45,6 @@ class ConfirmablePasswordController extends Controller
 
         $request->session()->put('auth.password_confirmed_at', time());
 
-        return redirect()->intended(RouteServiceProvider::MYSPACE);
+        return redirect()->intended(SetupRouteServiceProvider::MYSPACE);
     }
 }

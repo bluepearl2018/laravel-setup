@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use function redirect;
 use function back;
+use Eutranet\Setup\Providers\SetupRouteServiceProvider;
 
 class EmailVerificationNotificationController extends Controller
 {
@@ -20,7 +21,7 @@ class EmailVerificationNotificationController extends Controller
     public function store(Request $request): RedirectResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->intended(RouteServiceProvider::MYSPACE);
+            return redirect()->intended(SetupRouteServiceProvider::MYSPACE);
         }
 
         $request->user()->sendEmailVerificationNotification();

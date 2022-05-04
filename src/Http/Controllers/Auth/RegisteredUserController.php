@@ -84,6 +84,6 @@ class RegisteredUserController extends Controller
             Flash::success('You have created a new user.');
             return redirect()->intended(SetupRouteServiceProvider::SETUP);
         }
-        return redirect(RouteServiceProvider::MYSPACE);
+        return redirect(SetupRouteServiceProvider::MYSPACE);
     }
 }
