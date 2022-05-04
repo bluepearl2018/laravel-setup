@@ -14,6 +14,9 @@ use Eutranet\Setup\Http\Controllers\AgreementController;
 use Eutranet\Setup\Http\Controllers\UserController;
 use Eutranet\Setup\Http\Controllers\StaffMemberController;
 use Eutranet\Setup\Http\Controllers\RoleHasPermissionController;
+use Eutranet\Setup\Http\Controllers\EmailController;
+use Eutranet\Setup\Http\Controllers\GeneralTermController;
+use Eutranet\Setup\Http\Controllers\GuardController;
 
 Route::middleware(['web', 'guest:admin'])->prefix('setup')->name('setup.')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -90,9 +93,9 @@ Route::middleware(['web', 'auth:admin'])->prefix('setup')->name('setup.')->group
      * All documents and document categories..
      */
     Route::resource('agreements', AgreementController::class)->names('agreements');
-    /*Route::resource('emails', EmailController::class)->names('emails');
+    Route::resource('emails', EmailController::class)->names('emails');
     Route::resource('general-terms', GeneralTermController::class)->names('general-terms');
-    Route::resource('guards', GuardController::class)->names('guards');*/
+    Route::resource('guards', GuardController::class)->names('guards');
 
     /**
      * ACCOUNTS, ROLES AND PERMISSIONS
