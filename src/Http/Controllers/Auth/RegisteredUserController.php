@@ -79,7 +79,7 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         if (Auth::guard('staff')) {
-            return redirect(RouteServiceProvider::STAFF);
+            return redirect(SetupRouteServiceProvider::STAFF);
         } elseif (Auth::guard('admin')) {
             Flash::success('You have created a new user.');
             return redirect()->intended(SetupRouteServiceProvider::SETUP);
