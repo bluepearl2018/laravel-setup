@@ -1,0 +1,65 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import 'swiper/swiper-bundle.css';
+
+@layer components {
+	.theme-bg {
+		background-color: #2d3636;
+	}
+}
+@layer components {
+	.btn-primary {
+		@apply
+		w-full inline-flex items-center justify-center px-2 py-0.5 mt-2 border border-transparent text-base font-bold rounded-md text-gray-50 bg-yellow-600 hover:bg-yellow-500 sm:w-auto;
+	}
+
+}
+.alert-warning{
+	@apply
+	bg-yellow-300 text-left font-bold text-gray-800 uppercase
+}
+.alert-danger{
+	@apply
+	bg-red-300 text-left font-bold text-gray-800 uppercase
+}
+.alert-info{
+	@apply
+	bg-blue-300 text-left font-bold text-gray-800 uppercase
+}
+.alert-success{
+	@apply
+	bg-green-300 text-left font-bold text-gray-800 uppercase
+}
+.section-title{
+	@apply
+	text-2xl font-extrabold inline-block w-full mx-auto px-4 text-gray-700 sm:text-3xl lg:text-3xl
+}
+
+/* TABS */
+.user-tab-content{
+	@apply
+	grid grid-cols-2 px-6 pb-6 pt-14 gap-6 bg-white rounded-t-lg border-gray-500 relative
+}
+
+/* FORMS */
+.form-item{
+	@apply
+	flex flex-col space-y-1
+}
+.form-label{
+	@apply
+	block text-sm font-medium text-gray-700
+}
+.form-input {
+	@apply
+	bg-white shadow focus:ring-yellow-500 focus:border-yellow-500 py-2 pl-2 pr-7 border border-gray-500 text-gray-800 font-semibold sm:text-sm rounded-md
+}
+.form-select {
+	@apply
+	bg-white shadow focus:ring-yellow-500 focus:border-yellow-500 py-2 pl-2 pr-7 border border-gray-500 text-gray-800 font-semibold sm:text-sm rounded-md
+}
+.content-panel{
+	@apply
+	bg-white shadow p-4 rounded-lg my-4
+}
