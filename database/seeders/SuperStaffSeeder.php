@@ -5,6 +5,7 @@ namespace Eutranet\Setup\Database\Seeders;
 use Illuminate\Database\Seeder;
 use DB;
 use Exception;
+use Schema;
 
 class SuperStaffSeeder extends Seeder
 {
@@ -52,21 +53,20 @@ class SuperStaffSeeder extends Seeder
                 'deleted_at' => null
 ],
 ];
-
         if (DB::table('staff_members')->get()->count() < 1) {
             DB::table('staff_members')->insert(
                 $staffArray
             );
             $superStaffRole = DB::table('roles')->where('name', 'super-staff')->get()->first();
             if ($superStaffRole !== null) {
-                if (DB::table('model_has_roles')
-                        ->where('role_id', $superStaffRole->id)
-                        ->where('model_type', 'Eutranet\Setup\Models\StaffMember')
-                        ->where('model_id', '1')
-                        ->get() === null) {
+				if (Schema::hasTable('model_has_roles') && DB::table('model_has_roles')
+		                ->where('role_id', '=', $superStaffRole->id)
+		                ->where('model_type', 'Eutranet\Setup\Models\StaffMember')
+		                ->where('model_id', '=', '1')
+		                ->get() === null) {
                     DB::table('model_has_roles')->insert(
                         [
-                            'role_id' => $superStaffRole[0]->id,
+                            'role_id' => $superStaffRole->id,
                             'model_type' => 'Eutranet\Setup\Models\StaffMember',
                             'model_id' => '1'
                         ]
