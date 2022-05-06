@@ -36,7 +36,7 @@
 								<div class="table-cell w-1/12">
 									<input type="hidden" value="{{'list-'.$tableName}}"/>
 									<label>
-										<input {!! $role->hasPermissionTo('list-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
+										<input {!! null !== $role->hasPermissionTo('list-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
 											   type="checkbox"
 											   value="{{'list-'.$tableName}}" readonly/>
 									</label>
@@ -44,7 +44,7 @@
 								<div class="table-cell w-1/12">
 									<input type="hidden" value="{{'create-'.$tableName}}"/>
 									<label>
-										<input {!! $role->hasPermissionTo('create-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
+										<input {!! null !== $role->hasPermissionTo('create-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
 											   type="checkbox"
 											   value="{{'create-'.$tableName}}" readonly/>
 									</label>
@@ -52,7 +52,7 @@
 								<div class="table-cell w-1/12">
 									<input type="hidden" value="{{'read-'.$tableName}}"/>
 									<label>
-										<input {!! $role->hasPermissionTo('read-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
+										<input {!! null !== $role->hasPermissionTo('read-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
 											   type="checkbox"
 											   value="{{'read-'.$tableName}}" readonly/>
 									</label>
@@ -60,7 +60,7 @@
 								<div class="table-cell w-1/12">
 									<input type="hidden" value="{{'update-'.$tableName}}"/>
 									<label>
-										<input {!! $role->hasPermissionTo('update-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
+										<input {!! null !== $role->hasPermissionTo('update-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
 											   type="checkbox"
 											   value="{{'update-'.$tableName}}" readonly/>
 									</label>
@@ -68,7 +68,7 @@
 								<div class="table-cell w-1/12">
 									<input type="hidden" value="{{'delete-'.$tableName}}"/>
 									<label>
-										<input {!! $role->hasPermissionTo('delete-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
+										<input {!! null !== $role->hasPermissionTo('delete-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
 											   type="checkbox"
 											   value="{{'delete-'.$tableName}}" readonly/>
 									</label>
@@ -76,7 +76,7 @@
 								<div class="table-cell w-1/12">
 									<input type="hidden" value="{{'translate-'.$tableName}}"/>
 									<label>
-										<input {!! $role->hasPermissionTo('translate-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
+										<input {!! null !== $role->hasPermissionTo('translate-'.$tableName, $role->guard_name) ? 'checked' : '' !!} name="permission[]"
 											   type="checkbox"
 											   value="{{'translate-'.$tableName}}" readonly/>
 									</label>

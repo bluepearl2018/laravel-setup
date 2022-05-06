@@ -23,14 +23,14 @@
 				@csrf
 				@foreach($model::getFields() as $columnName => $specs)
 					<div class="col-span-1 break-inside-avoid">
-						<x-dynamic-component :component="'theme::forms.'.$specs[0].'-'.$specs[1]"
+						<x-dynamic-component :component="'theme-form-'.$specs[0].'-'.$specs[1]"
 											 :specs="$specs"
 											 old="{{ old($columnName) }}"
 											 :columnName="$columnName">
 						</x-dynamic-component>
 					</div>
 				@endforeach
-				<x-theme::forms.save-buttons form="{{'resource-create-form'}}"></x-forms.save-buttons>
+				<x-theme-form-save-buttons form="{{'resource-create-form'}}"></x-theme-form-save-buttons>
 			</form>
 		</div>
 	</div>

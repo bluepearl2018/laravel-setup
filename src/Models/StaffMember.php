@@ -30,6 +30,7 @@ use Eutranet\Corporate\Models\StaffTeam;
 use Eutranet\Corporate\Models\Team;
 use Eutranet\Commons\Models\Appellative;
 use Eutranet\Commons\Models\Country;
+use Eutranet\Corporate\Models\Consultation;
 
 /**
  * The StaffMember class has all users of the back-office
@@ -242,44 +243,6 @@ class StaffMember extends Authenticatable implements HasMedia, MustVerifyEmail
     }
 
     /**
-     * A staff member belongs to many teams
-     * @return BelongsToMany
-     */
-    public function corporate(): BelongsToMany
-    {
-        return $this->belongsToMany(Corporate::class, CorporateStaffMember::class);
-    }
-
-    /**
-     * A staff member belongs to many teams
-     * @return BelongsToMany
-     */
-    public function teams(): BelongsToMany
-    {
-        return $this->belongsToMany(Team::class, StaffTeam::class);
-    }
-
-    /**
-     * Get users in staff portfolio
-     *
-     * @return BelongsToMany
-     */
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class);
-    }
-
-    /**
-     * Get staff roles
-     *
-     * @return BelongsTo
-     */
-    public function role(): BelongsTo
-    {
-        return $this->belongsTo(Role::class, 'role_id');
-    }
-
-    /**
      * Get the gender of the staff member
      *
      * @return BelongsTo
@@ -297,26 +260,6 @@ class StaffMember extends Authenticatable implements HasMedia, MustVerifyEmail
     public function gender(): BelongsTo
     {
         return $this->belongsTo(Gender::class);
-    }
-
-    /**
-     * Get the agency where the staff belongs to
-     *
-     * @return BelongsTo
-     */
-    public function agency(): BelongsTo
-    {
-        return $this->belongsTo(Agency::class, 'agency_id');
-    }
-
-    /**
-     * Get the consultations assigned to a staff member
-     *
-     * @return HasMany
-     */
-    public function consultations(): HasMany
-    {
-        return $this->hasMany(Consultation::class, 'consultant_id');
     }
 
     /**

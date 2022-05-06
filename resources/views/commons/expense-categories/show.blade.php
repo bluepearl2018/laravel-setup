@@ -30,7 +30,7 @@
 				{{-- Todo Full form in order to filter list --}}
 				@foreach($model::getFields() as $columnName => $specs)
 					<div class="col-span-1 break-inside-avoid">
-						<x-dynamic-component :component="'theme::forms.'.$specs[0].'-'.$specs[1]"
+						<x-dynamic-component :component="'theme-form-'.$specs[0].'-'.$specs[1]"
 											 :specs="$specs"
 											 :old="$resource->$columnName"
 											 :columnName="$columnName">
