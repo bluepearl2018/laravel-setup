@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use DB;
 use Exception;
 use Schema;
+use Illuminate\Support\Facades\Hash;
 
 class SuperStaffSeeder extends Seeder
 {
@@ -44,7 +45,7 @@ class SuperStaffSeeder extends Seeder
                 'email_verified_at' => null,
                 'lead' => '{"en":"As the corporate HR Manager..."}',
                 'body' => '{"en":"Human resources managers supervise a company or organization\'s hiring process, from recruiting, interviewing, and hiring new staff. They help connect executives with employees, build an employer brand, improve employee engagement, build strategic talent resources plans."}',
-                'password' => '$2y$10$zsrMnjDpC0zVk7agH3EGYuzrtDugG0ORhRtYVOGCcNeyIqQE6TGHC',
+                'password' => Hash::make('Password'),
                 'representante' => 'General',
                 'is_active' => '1',
                 'is_super' => '1',
@@ -54,9 +55,9 @@ class SuperStaffSeeder extends Seeder
 ],
 ];
         if (DB::table('staff_members')->get()->count() < 1) {
-//            DB::table('staff_members')->insert(
-//                $staffArray
-//            );
+            DB::table('staff_members')->insert(
+                $staffArray
+            );
             $superStaffRole = DB::table('roles')->where('name', 'super-staff')->get()->first();
             if ($superStaffRole !== null) {
 				if (DB::table('model_has_roles')
