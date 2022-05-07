@@ -35,7 +35,7 @@ use Eutranet\Corporate\Models\Consultation;
 /**
  * The StaffMember class has all users of the back-office
  * The staff performs all operation on users, sales/leads and consultations.
- * Staff members can have a portfolio of uses (StaffMemberUser)
+ * Staff members can have a portfolio of uses (StaffPortfolio)
  * Staff members can take part to a team (StaffTeam)
  *
  */

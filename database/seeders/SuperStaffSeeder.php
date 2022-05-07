@@ -54,21 +54,21 @@ class SuperStaffSeeder extends Seeder
 ],
 ];
         if (DB::table('staff_members')->get()->count() < 1) {
-            DB::table('staff_members')->insert(
-                $staffArray
-            );
+//            DB::table('staff_members')->insert(
+//                $staffArray
+//            );
             $superStaffRole = DB::table('roles')->where('name', 'super-staff')->get()->first();
             if ($superStaffRole !== null) {
-				if (Schema::hasTable('model_has_roles') && DB::table('model_has_roles')
-		                ->where('role_id', '=', $superStaffRole->id)
-		                ->where('model_type', 'Eutranet\Setup\Models\StaffMember')
-		                ->where('model_id', '=', '1')
-		                ->get() === null) {
+				if (DB::table('model_has_roles')
+						->where('role_id', '=', $superStaffRole->id)
+						->where('model_type', 'Eutranet\Setup\Models\StaffMember')
+						->where('model_id', '=', 1)
+						->get()->first() === null) {
                     DB::table('model_has_roles')->insert(
                         [
                             'role_id' => $superStaffRole->id,
                             'model_type' => 'Eutranet\Setup\Models\StaffMember',
-                            'model_id' => '1'
+                            'model_id' => 1
                         ]
                     );
                 }
