@@ -26,7 +26,7 @@
 								:component="'theme-form-'.$specs[0] . '-' . $specs[1]"
 								:columnName="$columnName"
 								:specs="$specs"
-								:old="$entry->$columnName"
+								:old="old($columnName, $entry->$columnName)"
 						></x-dynamic-component>
 					</div>
 				@endforeach
