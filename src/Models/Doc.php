@@ -53,13 +53,13 @@ class Doc extends Model implements HasMedia
     {
         // field, type, required, placeholder, tip, model
         return [
-            'doc_category_id' => ['select', 'list', 'optinal', 'Document category', 'Selecte the document category', 'Eutranet\Setup\Models\DocCategory'],
-            'slug' => ['input', 'text', 'required', 'Doc page slug', 'Enter the slug'],
-            'title' => ['input', 'text', 'required', 'Doc page title', 'Enter the title'],
-            'meta_title' => ['input', 'text', 'required', 'Doc page SEO title', 'Enter the SEO title (140 chars)'],
-            'meta_description' => ['input', 'text', 'required', 'Doc page SEO meta description', 'Enter the SEO title (140 chars)'],
-            'lead' => ['input', 'textarea', 'required', 'Doc page lead', 'Doc page Intro'],
-            'body' => ['input', 'textarea', 'optional', 'Doc page body', 'Use the text formatter if needed']
+            'doc_category_id' => ['select', 'list', 'optinal', trans('documentations.Document category'), trans('documentations.Select the document category', 'Eutranet\Setup\Models\DocCategory')],
+            'slug' => ['input', 'text', 'required', trans('documentations.Doc page slug'), trans('documentations.Enter the slug')],
+            'title' => ['input', 'text', 'required', trans('documentations.Doc page title'), trans('documentations.Enter the title')],
+            'meta_title' => ['input', 'text', 'required', trans('documentations.Doc page SEO title'), trans('documentations.Enter the SEO title (140 chars)')],
+            'meta_description' => ['input', 'text', 'required', trans('documentations.Doc page SEO meta description'), trans('documentations.Enter the SEO title (140 chars)')],
+            'lead' => ['input', 'textarea', 'required', trans('documentations.Doc page lead'), trans('documentations.Doc page Intro')],
+            'body' => ['input', 'textarea', 'optional', trans('documentations.Doc page body'), trans('documentations.Use the text formatter if needed')]
         ];
     }
 

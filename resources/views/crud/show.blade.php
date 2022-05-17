@@ -5,7 +5,7 @@
 			<x-theme-h1>
 				{{ __('Show ') . Str::title(Str::replace('_', ' ', Str::snake($class)))  }} ({{ __('Details') }})
 			</x-theme-h1>
-			<p class="mt-2 text-md text-gray-700">{{ $lead  }}</p>
+			<p class="mt-2 text-md text-gray-700">{{ $lead }}</p>
 		</div>
 		@auth
 			<div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">

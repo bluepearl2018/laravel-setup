@@ -36,9 +36,9 @@ class Role extends \Spatie\Permission\Models\Role
     {
         // field, type, required, placeholder, tip, model
         return [
-            'name' => ['input', 'text', 'required', 'Name', 'Enter the name'],
-            'guard_name' => ['select', 'list', 'required', 'Guard name', 'Select the guard name', 'Eutranet\Setup\Models\Guard'],
-            'description' => ['input', 'textarea', 'optional', 'Description', 'Enter a description'],
+            'name' => ['input', 'text', 'required', trans('roles.Name'), trans('roles.Enter the role name')],
+            'guard_name' => ['select', 'list', 'required', trans('roles.Guard name'), trans('roles.Select the guard name'), 'Eutranet\Setup\Models\Guard'],
+            'description' => ['input', 'textarea', 'optional', trans('roles.Description'), trans('roles.Enter a description')],
         ];
     }
 

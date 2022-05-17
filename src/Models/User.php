@@ -68,9 +68,9 @@ class User extends \App\Models\User
     public static function getFields(): array
     {
         return [
-            'email' => ['input', 'email', 'required', 'Account email', 'This MUST NOT be deleted or updated', 'readonly'],
-            'name' => ['input', 'text', 'required', 'Account Name', 'This is the account name', 'readonly'],
-            'phone' => ['input', 'phone', 'required', 'Phone', 'Enter or update a phone number'],
+            'email' => ['input', 'email', 'required', trans('users.Account email'), trans('users.This MUST NOT be deleted or updated'), 'readonly'],
+            'name' => ['input', 'text', 'required', trans('users.Account Name'), trans('users.This is the account name'), 'readonly'],
+            'phone' => ['input', 'phone', 'required', trans('users.Phone'), trans('users.Enter or update a phone number')],
         ];
     }
 
@@ -85,9 +85,21 @@ class User extends \App\Models\User
             array('group' => 'fields', 'key' => 'email', 'text' => '{"en":"Email", "pt":"Email"}'),
             array('group' => 'fields', 'key' => 'password', 'text' => '{"en":"Password", "pt":"Palavra-passe"}')
         );
-        foreach ($lls as $ll) {
-            LanguageLine::firstOrCreate($ll);
-        }
+	    if (\Schema::hasTable('language_lines')) {
+		    foreach ($lls as $ll) {
+			    if(! \Eutranet\Commons\Models\LanguageLine::where([
+				    'group' => $ll['group'],
+				    'key' => $ll['key']
+			    ])->get()->first())
+			    {
+				    LanguageLine::create([
+					    'group' => $ll['group'],
+					    'key' => $ll['key'],
+					    'text' => json_decode($ll['text'], true)
+				    ]);
+			    };
+		    }
+	    }
     }
 
     /**

@@ -196,18 +196,22 @@ class StaffMember extends Authenticatable implements HasMedia, MustVerifyEmail
             array('group' => 'staff-members', 'key' => 'Enter a first name', 'text' => '{"en":"Enter a first name", "pt":"Indique o nome proprio"}'),
             array('group' => 'staff-members', 'key' => 'Enter a last name', 'text' => '{"en":"Enter a last name", "pt":"Indique o nome"}'),
 
-
         );
-
-        if (Schema::hasTable('language_lines')) {
-            foreach ($lls as $ll) {
-                LanguageLine::firstOrCreate([
-                    'group' => $ll['group'],
-                    'key' => $ll['key'],
-                    'text' => json_decode($ll['text'], true)
-                ]);
-            };
-        }
+	    if (\Schema::hasTable('language_lines')) {
+		    foreach ($lls as $ll) {
+			    if(! \Eutranet\Commons\Models\LanguageLine::where([
+				    'group' => $ll['group'],
+				    'key' => $ll['key']
+			    ])->get()->first())
+			    {
+				    LanguageLine::create([
+					    'group' => $ll['group'],
+					    'key' => $ll['key'],
+					    'text' => json_decode($ll['text'], true)
+				    ]);
+			    };
+		    }
+	    }
     }
 
     /**

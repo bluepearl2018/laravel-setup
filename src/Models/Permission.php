@@ -32,9 +32,9 @@ class Permission extends \Spatie\Permission\Models\Permission
 
     public static function getClassLead(): string
     {
-        return "CRUD permissions are granted to admins and super admins.
+        return trans('permissions.CRUD permissions are granted to admins and super admins.
 				They apply as soon as the application is booted. However, ad hoc permissions
-				have to be created according the customer's needs.";
+				have to be created according the customer\'s needs.');
     }
 
     /**

@@ -51,13 +51,13 @@ class DocCategory extends Model implements HasMedia
     {
         // field, type, required, placeholder, tip, model
         return [
-            'slug' => ['input', 'text', 'required', 'Doc page slug', 'Enter the slug'],
-            'parent_id' => ['select', 'list', 'optinal', 'Document category', 'Select the document category', __CLASS__],
-            'meta_description' => ['input', 'text', 'required', 'Doc page SEO meta description', 'Enter the SEO title (140 chars)'],
-            'meta_title' => ['input', 'text', 'required', 'Doc page SEO title', 'Enter the SEO title (140 chars)'],
-            'title' => ['input', 'text', 'required', 'Doc page title', 'Enter the title'],
-            'lead' => ['input', 'textarea', 'required', 'Doc page lead', 'Doc page Intro'],
-            'body' => ['input', 'textarea', 'optional', 'Doc page body', 'Use the text formatter if needed'],
+            'slug' => ['input', 'text', 'required', trans('documentation-categories.Doc page slug'), trans('documentation-categories.Enter the slug')],
+            'parent_id' => ['select', 'list', 'optinal', trans('documentation-categories.Document category'), trans('documentation-categories.Select the document category'), __CLASS__],
+            'meta_description' => ['input', 'text', 'required', trans('documentation-categories.Doc page SEO meta description'), trans('documentation-categories.Enter the SEO title (140 chars)')],
+            'meta_title' => ['input', 'text', 'required', trans('documentation-categories.Doc page SEO title'), trans('documentation-categories.Enter the SEO title (140 chars)')],
+            'title' => ['input', 'text', 'required', trans('documentation-categories.Doc page title'), trans('documentation-categories.Enter the title')],
+            'lead' => ['input', 'textarea', 'required', trans('documentation-categories.Doc page lead'), trans('documentation-categories.Doc page Intro')],
+            'body' => ['input', 'textarea', 'optional', trans('documentation-categories.Doc page body'), trans('documentation-categories.Use the text formatter if needed')],
         ];
     }
 

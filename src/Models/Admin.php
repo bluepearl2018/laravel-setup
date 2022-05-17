@@ -68,9 +68,21 @@ class Admin extends Authenticatable implements HasMedia, MustVerifyEmail
             array('group' => 'fields', 'key' => 'email', 'text' => '{"en":"Email", "pt":"Email"}'),
             array('group' => 'fields', 'key' => 'password', 'text' => '{"en":"Password", "pt":"Palavra-passe"}')
         );
-        foreach ($lls as $ll) {
-            LanguageLine::firstOrCreate($ll);
-        }
+	    if (\Schema::hasTable('language_lines')) {
+		    foreach ($lls as $ll) {
+			    if(! \Eutranet\Commons\Models\LanguageLine::where([
+				    'group' => $ll['group'],
+				    'key' => $ll['key']
+			    ])->get()->first())
+			    {
+				    LanguageLine::create([
+					    'group' => $ll['group'],
+					    'key' => $ll['key'],
+					    'text' => json_decode($ll['text'], true)
+				    ]);
+			    };
+		    }
+	    }
     }
 
     /**

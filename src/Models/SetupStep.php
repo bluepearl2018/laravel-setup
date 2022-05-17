@@ -63,12 +63,12 @@ class SetupStep extends Model implements HasMedia
     public static function getFields(): array
     {
         return [
-            'setup_process_id' => ['select', 'list', 'required', trans('laravel-setup-step.Setup process'), trans('laravel-setup-steps.Select a setup process id from the list'), 'App\Models\Admin\SetupProcess'],
-            'name' => ['input', 'text', 'required', trans('laravel-setup-step.Name'), trans('laravel-setup-steps.Enter a name or title for the laravel-setup step.')],
-            'description' => ['input', 'textarea', 'required', trans('laravel-setup-step.Description'), trans('laravel-setup-steps.A few lines explanation.')],
-            'comment' => ['input', 'textarea', 'optional', trans('laravel-setup-step.Comment'), trans('laravel-setup-steps.Comment for developers.')],
-            'console_action' => ['input', 'text', 'optional', 'Console action', 'Enter the console action command'],
-            'console_check' => ['input', 'text', 'required', 'Console check', 'Enter the console check command'],
+            'setup_process_id' => ['select', 'list', 'required', trans('setup-steps.Setup process'), trans('setup-steps.Select a setup process id from the list'), 'App\Models\Admin\SetupProcess'],
+            'name' => ['input', 'text', 'required', trans('setup-steps.Name'), trans('setup-steps.Enter a name or title for the laravel-setup step.')],
+            'description' => ['input', 'textarea', 'required', trans('setup-steps.Description'), trans('setup-steps.A few lines explanation.')],
+            'comment' => ['input', 'textarea', 'optional', trans('setup-steps.Comment'), trans('setup-steps.Comment for developers.')],
+            'console_action' => ['input', 'text', 'optional', trans('setup-steps.Console action'), trans('setup-steps.Enter the console action command')],
+            'console_check' => ['input', 'text', 'required', trans('setup-steps.Console check'), trans('setup-steps.Enter the console check command')],
 //			'is_complete' => ['checkbox', 'option', 'optional', 'Step is complete', 'Mark as complete'],
         ];
     }

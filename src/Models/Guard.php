@@ -50,7 +50,7 @@ class Guard extends Model
      */
     public static function getClassLead(): string
     {
-        return "After you have registered the provider using the provider method, you may switch to the new user provider in your auth.php configuration file. First, define a provider that uses your new driver. https://laravel.com/docs/9.x/authentication";
+        return trans('guards.After you have registered the provider using the provider method, you may switch to the new user provider in your auth.php configuration file. First, define a provider that uses your new driver. https://laravel.com/docs/9.x/authentication"');
     }
 
     /**

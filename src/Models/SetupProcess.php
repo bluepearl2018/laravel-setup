@@ -35,14 +35,14 @@ class SetupProcess extends Model
     public static function getFields(): array
     {
         return [
-            'name' => ['input', 'text', 'required', trans('laravel-setup-process.Name'), trans('laravel-setup-process.Enter a name or title for the laravel-setup step.')],
-            'description' => ['input', 'textarea', 'required', trans('laravel-setup-process.Description'), trans('laravel-setup-processs.A few lines explanation.')],
-            'comment' => ['input', 'textarea', 'optional', trans('laravel-setup-process.Comment'), trans('laravel-setup-processs.Comment for developers.')],
-            'console_action' => ['input', 'text', 'optional', 'Console action', 'Enter the console action command'],
-            'console_check' => ['input', 'text', 'required', 'Console check', 'Enter the console check command'],
+            'name' => ['input', 'text', 'required', trans('setup-processes.Name'), trans('setup-processes.Enter a name or title for the setup step.')],
+            'description' => ['input', 'textarea', 'required', trans('setup-processes.Description'), trans('setup-processs.A few lines explanation.')],
+            'comment' => ['input', 'textarea', 'optional', trans('setup-processes.Comment'), trans('setup-processs.Comment for developers.')],
+            'console_action' => ['input', 'text', 'optional', trans('setup-processes.Console action'), trans('setup-processes.Enter the console action command')],
+            'console_check' => ['input', 'text', 'required', trans('setup-processes.Console check'), trans('setup-processes.Enter the console check command')],
 
-//			'started' => ['checkbox', 'option', 'optional', trans('laravel-setup-process.Process is started'), trans('laravel-setup-process.Check if started')],
-//			'is_complete' => ['checkbox', 'option', 'optional', trans('laravel-setup-process.Step is complete'), trans('laravel-setup-process.Check if complete')],
+//			'started' => ['checkbox', 'option', 'optional', trans('setup-processes.Process is started'), trans('setup-processes.Check if started')],
+//			'is_complete' => ['checkbox', 'option', 'optional', trans('setup-processes.Step is complete'), trans('setup-processes.Check if complete')],
         ];
     }
 

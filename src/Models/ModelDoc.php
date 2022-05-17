@@ -52,13 +52,13 @@ class ModelDoc extends Model
         // field, type, required, placeholder, tip, model for select
         return [
             // TODO : check which one are needed
-            'table_name' => ['input', 'text', 'required', 'Table name', 'Enter the table name'],
-            'slug' => ['input', 'text', 'required', 'Slug', 'Enter the slug (max. 255 chars)'],
-            'name' => ['input', 'text', 'required', 'Name', 'Enter the name'],
-            'namespace' => ['input', 'text', 'required', 'Namespace', 'Enter the namespace'],
-            'description' => ['input', 'textarea', 'required', 'Description', 'Enter the a description'],
-            'comment' => ['input', 'textarea', 'required', 'Lead', 'Enter the lead / intro'],
-            'body' => ['input', 'textarea', 'required', 'Body', 'Enter the body'],
+            'table_name' => ['input', 'text', 'required', trans('model-docs.Table name'), trans('model-docs.Enter the table name')],
+            'slug' => ['input', 'text', 'required', trans('model-docs.Slug'), trans('model-docs.Enter the slug (max. 255 chars)')],
+            'name' => ['input', 'text', 'required', trans('model-docs.Name'), trans('model-docs.Enter the name')],
+            'namespace' => ['input', 'text', 'required', trans('model-docs.Namespace'), trans('model-docs.Enter the namespace')],
+            'description' => ['input', 'textarea', 'required', trans('model-docs.Description'), trans('model-docs.Enter the a description')],
+            'comment' => ['input', 'textarea', 'required', trans('model-docs.Lead'), trans('model-docs.Enter the lead / intro')],
+            'body' => ['input', 'textarea', 'required', trans('model-docs.Body'), trans('model-docs.Enter the body')],
         ];
     }
 

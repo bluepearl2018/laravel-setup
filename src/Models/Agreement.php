@@ -13,7 +13,11 @@ use Spatie\Translatable\HasTranslations;
 use Illuminate\Support\Facades\Schema;
 use Eutranet\Setup\Models\ModelDoc;
 use Illuminate\Support\Str;
+use Spatie\TranslationLoader\LanguageLine;
 
+/**
+ *
+ */
 class Agreement extends Model implements HasMedia
 {
     use HasTranslations;
@@ -24,8 +28,58 @@ class Agreement extends Model implements HasMedia
      * Agreements are UNSIGNED PDF agreement templates
      */
     protected $table = "agreements";
-    protected $fillable = ['name', 'description', 'lead', 'general_terms', 'author_id'];
-    protected array $translatable = ['name', 'description', 'lead']; // 'general_terms'
+	/**
+	 * @var string[]
+	 */
+	protected $fillable = ['name', 'description', 'lead', 'general_terms', 'author_id'];
+	/**
+	 * @var array|string[]
+	 */
+	protected array $translatable = ['name', 'description', 'lead']; // 'general_terms'
+
+
+	/**
+	 * @return array[]
+	 */
+	public static function getFields()
+	{
+		// field, type, required, placeholder, tip, model for select
+		return [
+			'name' => ['input', 'text', 'required', trans('agreements.Agreement name'), trans('agreements.Enter the agreement name')],
+			'lead' => ['input', 'textarea', 'required', trans('agreements.Intro'), trans('agreements.Enter an intro')],
+			'description' => ['input', 'textarea', 'required', trans('agreements.Description'), trans('agreements.Enter the description')],
+			'general_terms' => ['input', 'textarea', 'required', trans('agreements.General terms'), trans('agreements.Paste the general terms here')]
+		];
+	}
+
+	/**
+	 * @return void
+	 */
+	public static function saveTranslations()
+	{
+		$lls = array(
+			array('group' => 'fields', 'key' => 'name', 'text' => '{"en":"Name", "pt":"Nome", "fr":"Nom"}'),
+			array('group' => 'fields', 'key' => 'lead', 'text' => '{"en":"Lead", "pt":"Intro", "fr":"Intro"}'),
+			array('group' => 'fields', 'key' => 'description', 'text' => '{"en":"Description", "pt":"Description", "fr":"Description"}'),
+			array('group' => 'fields', 'key' => 'general_terms', 'text' => '{"en":"General Terms", "pt":"Condições gerais", "fr":"Conditions générales"}'),
+
+		);
+		if (\Schema::hasTable('language_lines')) {
+			foreach ($lls as $ll) {
+				if(! LanguageLine::where([
+					'group' => $ll['group'],
+					'key' => $ll['key']
+				])->get()->first())
+				{
+					LanguageLine::create([
+						'group' => $ll['group'],
+						'key' => $ll['key'],
+						'text' => json_decode($ll['text'], true)
+					]);
+				};
+			}
+		}
+	}
 
     /**
      * This static function is essential for the documentation service provider
@@ -37,7 +91,10 @@ class Agreement extends Model implements HasMedia
         return __NAMESPACE__;
     }
 
-    public static function getClassLead(): string
+	/**
+	 * @return string
+	 */
+	public static function getClassLead(): string
     {
         return '';
     }
@@ -53,23 +110,19 @@ class Agreement extends Model implements HasMedia
         return AgreementFactory::new();
     }
 
-    public static function getFields()
-    {
-        // field, type, required, placeholder, tip, model for select
-        return [
-            'name' => ['input', 'text', 'required', 'Agreement name', 'Enter the agreement name'],
-            'lead' => ['input', 'textarea', 'required', 'Intro', 'Enter an intro'],
-            'description' => ['input', 'textarea', 'required', 'Description', 'Enter the description'],
-            'general_terms' => ['input', 'textarea', 'required', 'General terms', 'Paste the general terms here']
-        ];
-    }
 
-    public function registerMediaCollections(): void
+	/**
+	 * @return void
+	 */
+	public function registerMediaCollections(): void
     {
         $this->addMediaCollection('agreements');
     }
 
-    public function author(): BelongsTo
+	/**
+	 * @return BelongsTo
+	 */
+	public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }
@@ -81,6 +134,7 @@ class Agreement extends Model implements HasMedia
      */
     protected static function booted()
     {
+		static::saveTranslations();
         if (Schema::hasTable('model_docs')) {
             ModelDoc::firstOrCreate([
                 'table_name' => (new Agreement())->getTable(),

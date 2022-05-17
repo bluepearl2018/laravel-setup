@@ -55,11 +55,11 @@ class GeneralTerm extends Model implements HasMedia
     {
         // field, type, required, placeholder, tip, model for select
         return [
-            'title' => ['input', 'textarea', 'required', 'Title', 'Enter the title'],
-            'description' => ['input', 'textarea', 'required', 'Description', 'Enter the description'],
-            'lead' => ['input', 'textarea', 'required', 'Lead', 'Enter the lead / intro'],
-            'body' => ['input', 'textarea', 'required', 'Body', 'Enter the body'],
-            'file_path' => ['input', 'file', 'optional', 'PDF version', 'Get a PDF from you preferred folder'],
+            'title' => ['input', 'textarea', 'required', trans('general-terms.Title'), trans('general-terms.Enter the title')],
+            'description' => ['input', 'textarea', 'required', trans('general-terms.Description'), trans('general-terms.Enter the description')],
+            'lead' => ['input', 'textarea', 'required', trans('general-terms.Lead'), trans('general-terms.Enter the lead / intro')],
+            'body' => ['input', 'textarea', 'required', trans('general-terms.Body'), trans('general-terms.Enter the body')],
+            'file_path' => ['input', 'file', 'optional', trans('general-terms.PDF version'), trans('general-terms.Get a PDF from you preferred folder')],
         ];
     }
 
