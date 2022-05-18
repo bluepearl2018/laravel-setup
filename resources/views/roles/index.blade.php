@@ -6,7 +6,7 @@
 			<p class="my-2 italic">{{__('The roles in this table are the default roles, the one injected at configuration stage. Roles added later can be trashed.') }}</p>
 		</div>
 		<a class="max-w-xl btn-primary" href="{{ route('setup.roles.create') }}">
-			<i class="fa fa-plus mr-2"></i>{{__('Create')}}
+			<i class="fa fa-plus mr-2"></i>{{__('labels.Create')}}
 		</a>
 	</div>
 	<div class="content-panel">

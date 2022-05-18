@@ -10,7 +10,7 @@
 		  method="post">
 		@csrf
 		@method('PUT')
-		<x-theme-form-update-buttons form="sync-role-permissions-frm">{{__('Update')}}</x-theme-form-update-buttons>
+		<x-theme-form-update-buttons form="sync-role-permissions-frm">{{__('labels.Update')}}</x-theme-form-update-buttons>
 		<input type="hidden" value="{{ $role->guard_name }}" name="guard_name"/>
 		<table>
 			<tr>
@@ -69,7 +69,7 @@
 				{{$permissions ?? __('NOTHING_TO_SHOW') }}
 			@endforelse
 		</table>
-		<x-theme-form-update-buttons form="sync-role-permissions-frm">{{__('Update')}}</x-theme-form-update-buttons>
+		<x-theme-form-update-buttons form="sync-role-permissions-frm">{{__('labels.Update')}}</x-theme-form-update-buttons>
 	</form>
 
 @endsection

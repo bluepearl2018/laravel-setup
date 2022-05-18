@@ -25,7 +25,7 @@
 						<div class="w-2/3">{!! $docCategory->lead !!}</div>
 						<a href="{{route('setup.doc-categories.show', $docCategory->slug) }}" class="btn-primary"><i class="fa fa-eye"></i></a>
 					@empty
-						{{ __('NOTHING TO SHOW') }}
+						{{ __('warnings.NOTHING TO SHOW') }}
 					@endforelse
 				</div>
 			</div>

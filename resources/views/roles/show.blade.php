@@ -89,7 +89,7 @@
 				@endif
 				@empty
 			@endforelse
-		<x-theme-form-update-buttons form="sync-role-permissions-frm">{{__('Update')}}</x-theme-form-update-buttons>
+		<x-theme-form-update-buttons form="sync-role-permissions-frm">{{__('labels.Update')}}</x-theme-form-update-buttons>
 	</form>
 
 @endsection
