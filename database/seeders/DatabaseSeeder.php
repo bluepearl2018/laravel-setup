@@ -41,10 +41,10 @@ class DatabaseSeeder extends Seeder
         $this->call(DocSeeder::class);
         $this->call(MediaSeeder::class);
 
-        Model::unguard();
-        User::factory()
-            ->count(25)
-            ->create();
-        Model::reguard();
+//        Model::unguard();
+//        User::factory()
+//            ->count(25)
+//            ->create();
+//        Model::reguard();
     }
 }
